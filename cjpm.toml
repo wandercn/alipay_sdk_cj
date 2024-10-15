@@ -6,7 +6,7 @@
   compile-option = ""
   description = "AliPay Sdk for 仓颉"
   link-option = ""
-  name = "alipay_sdk_cj"
+  name = "alipay_sdk"
   output-type = "static"
   override-compile-option = ""
   src-dir = "src"
