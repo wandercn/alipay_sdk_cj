@@ -1,0 +1,21 @@
+{
+    "terminal.integrated.env.osx": {
+        "CANGJIE_HOME": "/Users/lsmiao/cangjie",
+        "CANGJIE_PATH": "/Users/lsmiao/cangjie/bin:/Users/lsmiao/cangjie/tools/bin:/Users/lsmiao/cangjie/debugger/bin:",
+        "CANGJIE_LD_LIBRARY_PATH": "/Users/lsmiao/cangjie/runtime/lib/darwin_aarch64_llvm:/Users/lsmiao/cangjie/tools/lib:",
+        "DYLD_LIBRARY_PATH": "${config:terminal.integrated.env.osx.CANGJIE_LD_LIBRARY_PATH}:${env:DYLD_LIBRARY_PATH}",
+        "SDKROOT": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk",
+        "PATH": "${config:terminal.integrated.env.osx.CANGJIE_PATH}:${env:PATH}"
+    },
+    "editor.gotoLocation.alternativeDeclarationCommand": "editor.action.revealDefinition",
+    "editor.gotoLocation.alternativeDefinitionCommand": "editor.action.revealDefinition",
+    "editor.gotoLocation.alternativeTypeDefinitionCommand": "editor.action.revealDefinition",
+    "editor.selectionHighlight": false,
+    "files.autoSave": "onFocusChange",
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.quickSuggestions": {
+        "other": "on",
+        "comments": "off",
+        "strings": "on"
+    }
+}
