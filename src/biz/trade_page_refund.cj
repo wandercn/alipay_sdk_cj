@@ -1,7 +1,6 @@
 package alipay_sdk.biz
 
 public class TradePageRefundBiz <: BizObject & BizContenter {
-    
     public func method(): String {
         return "alipay.trade.page.refund"
     }

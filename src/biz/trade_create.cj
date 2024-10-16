@@ -1,7 +1,6 @@
 package alipay_sdk.biz
 
 public class TradeCreateBiz <: BizObject & BizContenter {
-    
     public func method(): String {
         return "alipay.trade.create"
     }
