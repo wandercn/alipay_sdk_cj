@@ -4,8 +4,10 @@ import std.collection.HashMap
 import encoding.json.{JsonValue, JsonKind}
 
 public type V = JsonValue
+
 public interface BizContenter {
     func method(): String
+    // 设置可选字段方法
     func set(k: String, v: V): Unit
 }
 
