@@ -1,6 +1,7 @@
 package alipay_sdk.biz
 
 public class TradeCloseBiz <: BizObject & BizContenter {
+    
     public func method(): String {
         return "alipay.trade.close"
     }
