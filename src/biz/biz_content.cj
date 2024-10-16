@@ -4,6 +4,7 @@ import std.collection.HashMap
 import encoding.json.{JsonValue, JsonKind}
 
 public type V = JsonValue
+
 public interface BizContenter {
     func method(): String
     func set(k: String, v: V): Unit
