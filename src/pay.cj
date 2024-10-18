@@ -23,7 +23,7 @@ public interface Payer {
     // func execute(Requester) (*[]byte, error)
     // static func execute<T>(req: T): Array<Byte> where T <: Requester
     // DoAlipay(biz.BizContenter) (*[]byte, error)
-    // static func doAlipay<B>(biz: B): Array<Byte> where B <: BizContenter
+    static func doAlipay<B>(biz: B): Array<Byte> where B <: BizContenter
 
     // TradeCreate(*biz.TradeCreateBiz) (*TradeCreateResponse, error)
     // func tradeCreate(biz: TradeCreateBiz): TradeCreateResponse
@@ -112,167 +112,160 @@ public class PayClient <: Payer {
     // return
     // }
     // DoAlipay(biz.BizContenter) (*[]byte, error)
-    // public static func doAlipay<B>(biz: B): Array<Byte> where B <: BizContenter {}
+    public static func doAlipay<B>(biz: B): Array<Byte> where B <: BizContenter {
+        match (biz.method()) {
+            case "alipay.trade.wap.pay"|"alipay.trade.page.pay" => return [1,0]
+            case "alipay.trade.app.pay" => return [2,0]
+            case _ =>return [3,0]
+            
+        }
+    }
     // public func tradeCreate(biz: TradeCreateBiz): TradeCreateResponse {}
 }
 
 public class PayClientBuilder {
-    var ApiUrl: Option<String> = None // 接口网关地址
-    var PrivateKey: Option<String> = None // rsa私钥单行文本字符串
-    var PublicKey: Option<String> = None // rsa公钥单行文本字符串
-    var AlipayPublicKey: Option<String> = None // 证书解析出的支付宝公钥
-    var AppCertSn: Option<String> = None //`json:"app_cert_sn"`          // 应用公钥证书 SN
-    var AlipayRootCertSn: Option<String> = None // `json:"alipay_root_cert_sn"`  // 支付宝根证书 SN
-    var AppID: Option<String> = None // `json:"app_id"`               // 是	32	支付宝分配给开发者的应用ID	2014072300007148
-    var Format: Option<String> = None // `json:"format,omitempty"`     // 否	40	仅支持JSON	JSON
-    var Charset: Option<String> = None // `json:"charset"`              // 是	10	请求使用的编码格式，如utf-8,gbk,gb2312等	utf-8
-    var SignType: Option<String> = None //`json:"sign_type"`            // 是	10	商户生成签名字符串所使用的签名算法类型，目前支持RSA2和RSA，推荐使用RSA2	RSA2
-    var Version: Option<String> = None // `json:"version"`              // 是	3	调用的接口版本，固定为：1.0	1.0
-    var ReturnUrl: Option<String> = None //`json:"return_url,omitempty"` // 否 前台回跳地址 return_url 自动跳转回商户页面
-    var NotifyUrl: Option<String> = None //`json:"notify_url,omitempty"` // 支付宝服务器主动通知callback商户服务器里指定的页面http/https路径。
+    var apiUrl: Option<String> = None // 接口网关地址
+    var privateKey: Option<String> = None // rsa私钥单行文本字符串
+    var publicKey: Option<String> = None // rsa公钥单行文本字符串
+    var alipayPublicKey: Option<String> = None // 证书解析出的支付宝公钥
+    var appCertSn: Option<String> = None //`json:"app_cert_sn"`          // 应用公钥证书 SN
+    var alipayRootCertSn: Option<String> = None // `json:"alipay_root_cert_sn"`  // 支付宝根证书 SN
+    var appID: Option<String> = None // `json:"app_id"`               // 是	32	支付宝分配给开发者的应用ID	2014072300007148
+    var format: Option<String> = None // `json:"format,omitempty"`     // 否	40	仅支持JSON	JSON
+    var charset: Option<String> = None // `json:"charset"`              // 是	10	请求使用的编码格式，如utf-8,gbk,gb2312等	utf-8
+    var signType: Option<String> = None //`json:"sign_type"`            // 是	10	商户生成签名字符串所使用的签名算法类型，目前支持RSA2和RSA，推荐使用RSA2	RSA2
+    var version: Option<String> = None // `json:"version"`              // 是	3	调用的接口版本，固定为：1.0	1.0
+    var returnUrl: Option<String> = None //`json:"return_url,omitempty"` // 否 前台回跳地址 return_url 自动跳转回商户页面
+    var notifyUrl: Option<String> = None //`json:"notify_url,omitempty"` // 支付宝服务器主动通知callback商户服务器里指定的页面http/https路径。
 
-    public func apiUrl(v: String): This {
-        this.ApiUrl = Some(v)
+    public func setApiUrl(v: String): This {
+        this.apiUrl = Some(v)
         return this
     }
 
-    public func privateKey(v: String): This {
-        this.PrivateKey = Some(v)
+    public func setPrivateKey(v: String): This {
+        this.privateKey = Some(v)
         return this
     }
-    public func publicKey(v: String): This {
-        this.PublicKey = Some(v)
-        return this
-    }
-
-    public func alipayPublicKey(v: String): This {
-        this.AlipayPublicKey = Some(v)
+    public func setPublicKey(v: String): This {
+        this.publicKey = Some(v)
         return this
     }
 
-    public func appCertSn(v: String): This {
-        this.AppCertSn = Some(v)
+    public func setAlipayPublicKey(v: String): This {
+        this.alipayPublicKey = Some(v)
         return this
     }
 
-    public func alipayRootCertSn(v: String): This {
-        this.AlipayRootCertSn = Some(v)
+    public func setAppCertSn(v: String): This {
+        this.appCertSn = Some(v)
         return this
     }
 
-    public func appID(v: String): This {
-        this.AppID = Some(v)
+    public func setAlipayRootCertSn(v: String): This {
+        this.alipayRootCertSn = Some(v)
         return this
     }
 
-    public func format(v: String): This {
-        this.Format = Some(v)
+    public func setAppID(v: String): This {
+        this.appID = Some(v)
         return this
     }
 
-    public func charset(v: String): This {
-        this.Charset = Some(v)
+    public func setFormat(v: String): This {
+        this.format = Some(v)
         return this
     }
 
-    public func signType(v: String): This {
-        this.SignType = Some(v)
+    public func setCharset(v: String): This {
+        this.charset = Some(v)
         return this
     }
 
-    public func version(v: String): This {
-        this.Version = Some(v)
+    public func setSignType(v: String): This {
+        this.signType = Some(v)
         return this
     }
 
-    public func returnUrl(v: String): This {
-        this.ReturnUrl = Some(v)
+    public func setVersion(v: String): This {
+        this.version = Some(v)
         return this
     }
 
-    public func notifyUrl(v: String): This {
-        this.NotifyUrl = Some(v)
+    public func setReturnUrl(v: String): This {
+        this.returnUrl = Some(v)
         return this
     }
 
-    public func build(): PayClient {
+    public func setNotifyUrl(v: String): This {
+        this.notifyUrl = Some(v)
+        return this
+    }
+
+    public func build(): Payer {
         var p = PayClient()
 
-        if (let Some(v) <- this.ApiUrl) {
-            this.ApiUrl = v
+        if (let Some(v) <- this.apiUrl) {
+            p.ApiUrl = v
         } else {
             throw Exception("api_url is required")
         }
-
-        if (let Some(v) <- this.PrivateKey) {
-            this.PrivateKey = v
+        if (let Some(v) <- this.privateKey) {
+            p.PrivateKey = v
         } else {
             throw Exception("private_key is required")
         }
-        if (let Some(v) <- this.PublicKey) {
+        if (let Some(v) <- this.publicKey) {
             p.PublicKey = v
         } else {
             throw Exception("public_key is required")
         }
-
-        if (let Some(v) <- this.AlipayPublicKey) {
+        if (let Some(v) <- this.alipayPublicKey) {
             p.AlipayPublicKey = v
         } else {
             throw Exception("alipay_public_key is required")
         }
-
-        if (let Some(v) <- this.AppCertSn) {
+        if (let Some(v) <- this.appCertSn) {
             p.AppCertSn = v
         } else {
             throw Exception("app_cert_sn is required")
         }
-
-        if (let Some(v) <- this.AlipayRootCertSn) {
+        if (let Some(v) <- this.alipayRootCertSn) {
             p.AlipayRootCertSn = v
         } else {
             throw Exception("alipay_root_cert_sn is required")
         }
-
-        if (let Some(v) <- this.AppID) {
+        if (let Some(v) <- this.appID) {
             p.AppID = v
         } else {
             throw Exception("app_id is required")
         }
-
-        if (let Some(v) <- this.Format) {
+        if (let Some(v) <- this.format) {
             p.Format = v
         } else {
             p.Format = "JSON"
         }
-
-        if (let Some(v) <- this.Charset) {
+        if (let Some(v) <- this.charset) {
             p.Charset = v
         } else {
             p.Charset = "utf-8"
         }
-
-        if (let Some(v) <- this.SignType) {
+        if (let Some(v) <- this.signType) {
             p.SignType = v
         } else {
             p.SignType = "RSA2"
         }
-
-        if (let Some(v) <- this.Version) {
+        if (let Some(v) <- this.version) {
             p.Version = v
         } else {
             p.Version = "1.0"
         }
-
-        if (let Some(v) <- this.ReturnUrl) {
+        if (let Some(v) <- this.returnUrl) {
             p.ReturnUrl = v
         }
-
-        if (let Some(v) <- this.NotifyUrl) {
+        if (let Some(v) <- this.notifyUrl) {
             p.NotifyUrl = v
-        } else {
-            throw Exception("notify_url is required")
         }
-
         return p
     }
 }
