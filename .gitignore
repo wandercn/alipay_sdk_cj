@@ -3,3 +3,4 @@
 /build
 *.gcno
 /.vscode
+cjlintignore.cfg
