@@ -1,6 +1,9 @@
 package alipay_sdk
 
-import alipay_sdk.biz.*
+import alipay_sdk.biz.{BizContenter, getResponseKey}
+import net.http.*
+import net.tls.*
+import encoding.json.*
 
 public interface Payer {
     func getApiUrl(): String
@@ -21,9 +24,9 @@ public interface Payer {
     func setCharset(chartset: String): Unit
 
     // func execute(Requester) (*[]byte, error)
-    // static func execute<T>(req: T): Array<Byte> where T <: Requester
+    func execute(req: Requester): Array<Byte>
     // DoAlipay(biz.BizContenter) (*[]byte, error)
-    static func doAlipay<B>(biz: B): Array<Byte> where B <: BizContenter
+    func doAlipay(bizContent: BizContenter): Array<Byte>
 
     // TradeCreate(*biz.TradeCreateBiz) (*TradeCreateResponse, error)
     // func tradeCreate(biz: TradeCreateBiz): TradeCreateResponse
@@ -108,16 +111,65 @@ public class PayClient <: Payer {
     public func setCharset(chartset: String): Unit {
         this.Charset = chartset
     }
-    // public static func execute<T>(req: T): Array<Byte> where T <: Requester {
-    // return
-    // }
+    public func execute(req: Requester): Array<Byte> {
+        let method = req.getMethod()
+        let payload = req.encodePayload()
+        var tlsConfig = TlsClientConfig()
+        var httpclient = ClientBuilder().tlsConfig(tlsConfig).build()
+        var requestBuild = HttpRequestBuilder()
+        if (method == "alipay.trade.precreate") {
+            requestBuild.url(this.ApiUrl + "?" + payload).get()
+        } else {
+            requestBuild.url(this.ApiUrl).body(payload)
+        }
+        var request = requestBuild.header("Content-Type", "application/x-www-form-urlencoded").build()
+        let res = httpclient.send(request)
+        httpclient.close()
+        let length = match (res.bodySize) {
+            case Some(data) => data
+            case _ => 0
+        }
+        let buf = Array<Byte>(length, repeat: 0)
+        res.body.read(buf)
+        return buf
+    }
     // DoAlipay(biz.BizContenter) (*[]byte, error)
-    public static func doAlipay<B>(biz: B): Array<Byte> where B <: BizContenter {
-        match (biz.method()) {
-            case "alipay.trade.wap.pay"|"alipay.trade.page.pay" => return [1,0]
-            case "alipay.trade.app.pay" => return [2,0]
-            case _ =>return [3,0]
-            
+    public func doAlipay(bizContent: BizContenter): Array<Byte> {
+        match (bizContent.method()) {
+            case "alipay.trade.wap.pay" | "alipay.trade.page.pay" => return [1, 0]
+            case "alipay.trade.app.pay" => return [2, 0]
+            case _ =>
+                var request = Request(this).setBizContent(bizContent).setMethod(bizContent.method())
+                let res = this.execute(request)
+                // 同步验签
+                func syncVerifySign(response: Array<Byte>): Bool {
+                    var result = response.toString()
+                    // 闭包，获取response
+                    func getRawSource(): String {
+                        let responseKey = getResponseKey(bizContent)
+
+                        if (let Some(raw) <- JsonValue.fromStr(result).asObject().get(responseKey)) {
+                            return raw.toString()
+                        } else {
+                            return ""
+                        }
+                    }
+                    // 闭包，获取签名
+                    func getSignture(): String {
+                        if (let Some(sign) <- JsonValue.fromStr(result).asObject().get("sign")) {
+                            return sign.toString()
+                        } else {
+                            return ""
+                        }
+                    }
+                    return false
+                }
+                let isPass = syncVerifySign(res)
+                if (!isPass) {
+                    throw Exception("syncVerifySign no passed!")
+                } else {
+                    return res
+                }
         }
     }
     // public func tradeCreate(biz: TradeCreateBiz): TradeCreateResponse {}
