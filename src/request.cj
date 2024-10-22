@@ -123,18 +123,18 @@ public class Request <: Serializable<Request> & Requester { // 是否必填	最�
         return ""
     }
     public func getSignSource(): String {
-        var m = HashMap<String, String>()
-        var v = this.serialize().toJson().asObject()
+        var jsonObj = this.serialize()
+        let m = HashMap<String, String>.deserialize(jsonObj)
         var queryList = ArrayList<String>()
         for ((k, v) in m) {
             if (!v.isEmpty() && k != "sign") {
-				let query = k + "=" + v.trimStart(" ").trimEnd(" ")
-			 queryList.append(query)
+                let query = k + "=" + v.trimStart(" ").trimEnd(" ")
+                queryList.append(query)
             }
         }
-		var arr = queryList.toArray()
-		stableSort(arr)
+        var arr = queryList.toArray()
+        stableSort(arr)
 
-        return  String.join(arr, delimiter:"&")
+        return String.join(arr, delimiter: "&")
     }
 }
