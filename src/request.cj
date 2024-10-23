@@ -135,12 +135,14 @@ public class Request <: Serializable<Request> & Requester { // 是否必填	最�
     }
     public func getSignSource(): String {
         var jsonObj = this.serialize()
-        let m = HashMap<String, String>.deserialize(jsonObj)
+        let m = HashMap<String,Option<String>>.deserialize(jsonObj)
         var queryList = ArrayList<String>()
         for ((k, v) in m) {
-            if (!v.isEmpty() && k != "sign") {
-                let query = k + "=" + v.trimStart(" ").trimEnd(" ")
+            if (let Some(v2) <- v) {
+            if (!v2.isEmpty() && k != "sign") {
+                let query = k + "=" + v2.trimStart(" ").trimEnd(" ")
                 queryList.append(query)
+            }
             }
         }
         var arr = queryList.toArray()
