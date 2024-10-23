@@ -3,7 +3,7 @@ package alipay_sdk.biz
 import std.collection.HashMap
 import encoding.json.{JsonValue, JsonKind}
 
-public type V = JsonValue
+public type V = String 
 
 public interface BizContenter {
     func method(): String
