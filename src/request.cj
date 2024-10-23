@@ -129,7 +129,7 @@ public class Request <: Serializable<Request> & Requester { // 是否必填	最�
         signSourceSplits.sort(stable: true)
         var sortStr = String.join(signSourceSplits, delimiter: "&")
         let signture = signer.sign(sortStr)
-        let encodeQuery = URL.parse(sortStr + "&sign=" + signture).toString()
+        let encodeQuery = URL.parse(sortStr + "&sign=" + signture).queryForm.toEncodeString()
 
         return encodeQuery
     }
