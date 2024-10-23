@@ -14,19 +14,20 @@ public interface Signer {
     mut func setPublicKey(s: String): Unit
 }
 
+public func newSigner(signType: String): Signer {
+    match (signType) {
+        case "RSA2" => SignSHA256WithRSA()
+        case _ => SignSHA256WithRSA()
+    }
+}
+
 // 目前只支持RSA2模式
 public struct SignSHA256WithRSA <: Signer {
     var privateKey: Option<RSAPrivateKey>
     var publicKey: Option<RSAPublicKey>
-    init(signType: String) {
-        match (signType) {
-            case "RSA2" =>
-                this.privateKey = None
-                this.publicKey = None
-            case _ =>
-                this.privateKey = None
-                this.publicKey = None
-        }
+    init() {
+        this.privateKey = None
+        this.publicKey = None
     }
     // 通过RSA文本字符串设置RSA私钥
     public mut func setPrivateKey(s: String) {
