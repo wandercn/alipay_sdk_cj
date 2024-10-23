@@ -1,9 +1,12 @@
 package alipay_sdk
 
-import alipay_sdk.biz.{BizContenter, getResponseKey}
+import alipay_sdk.biz.*
 import net.http.*
 import net.tls.*
 import encoding.json.*
+import encoding.url.*
+import std.collection.HashMap
+import serialization.serialization.*
 
 public interface Payer {
     func getApiUrl(): String
@@ -29,7 +32,7 @@ public interface Payer {
     func doAlipay(bizContent: BizContenter): Array<Byte>
 
     // TradeCreate(*biz.TradeCreateBiz) (*TradeCreateResponse, error)
-    // func tradeCreate(biz: TradeCreateBiz): TradeCreateResponse
+    func tradeCreate(biz: TradeCreateBiz): TradeCreateResponse
     // TradePay(*biz.TradePayBiz) (*TradePayResponse, error)
     // TradePrecreate(*biz.TradePrecreateBiz) (*TradePrecreateResponse, error)
     // TradeAppPay(*biz.TradeAppPayBiz) (string, error)
@@ -120,7 +123,7 @@ public class PayClient <: Payer {
         if (method == "alipay.trade.precreate") {
             requestBuild.url(this.ApiUrl + "?" + payload).get()
         } else {
-            requestBuild.url(this.ApiUrl).body(payload)
+            requestBuild.url(this.ApiUrl).body(payload).post()
         }
         var request = requestBuild.header("Content-Type", "application/x-www-form-urlencoded").build()
         let res = httpclient.send(request)
@@ -131,9 +134,10 @@ public class PayClient <: Payer {
         }
         let buf = Array<Byte>(length, repeat: 0)
         res.body.read(buf)
+
         return buf
     }
-    // DoAlipay(biz.BizContenter) (*[]byte, error)
+
     public func doAlipay(bizContent: BizContenter): Array<Byte> {
         match (bizContent.method()) {
             case "alipay.trade.wap.pay" | "alipay.trade.page.pay" => return [1, 0]
@@ -162,6 +166,10 @@ public class PayClient <: Payer {
                             return ""
                         }
                     }
+                    var singer = newSigner(this.getSignType())
+                    singer.setPublicKey(this.getAlipayPublicKey())
+
+                    let passd = singer.verify(getRawSource(), getSignture())
                     return false
                 }
                 let isPass = syncVerifySign(res)
@@ -172,7 +180,39 @@ public class PayClient <: Payer {
                 }
         }
     }
-    // public func tradeCreate(biz: TradeCreateBiz): TradeCreateResponse {}
+
+    func createClienPageForm(bizContent: BizContenter): Array<Byte> {
+        var request = Request(this).setBizContent(bizContent).setMethod(bizContent.method())
+        let encodeQuery = request.encodePayload()
+        var parameters = HashMap<String, String>()
+        let kvPairs = encodeQuery.split("&")
+        for (kv in kvPairs) {
+            let splits = kv.split("=")
+            let k = splits[0]
+            let v = splits[1]
+            parameters[k] = v
+        }
+        let form = buildFrom(this.getApiUrl(), parameters)
+
+        return form.toArray()
+    }
+
+    func createClienSdktRequest(bizContent: BizContenter): Array<Byte> {
+        var request = Request(this).setBizContent(bizContent).setMethod(bizContent.method())
+        let clientSdkRequest = request.encodePayload()
+        return clientSdkRequest.toArray()
+    }
+
+    // https://opendocs.alipay.com/apis/api_1/alipay.trade.create
+    // alipay.trade.create(统一收单交易创建接口)
+    public func tradeCreate(biz: TradeCreateBiz): TradeCreateResponse {
+        let body = this.doAlipay(biz)
+        var jsonV = JsonValue.fromStr(body.toString())
+        let dm = DataModel.fromJson(jsonV)
+        var res = TradeCreateResponse.deserialize(dm)
+
+        return res
+    }
 }
 
 public class PayClientBuilder {
