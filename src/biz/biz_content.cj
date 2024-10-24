@@ -1,25 +1,26 @@
 package alipay_sdk.biz
 
 import std.collection.HashMap
-import encoding.json.{JsonValue, JsonKind}
+import encoding.json.*
+import serialization.serialization.DataModel
 
-public type V = String 
+public type V = JsonValue
 
 public interface BizContenter {
     func method(): String
     // 设置可选字段方法
     func set(k: String, v: V): Unit
-    func getMap(): HashMap<String, V>
+    func getMap(): JsonObject
 }
 
 public open class BizObject {
-    private var inner: HashMap<String, V>
+    private var inner: JsonObject
 
     init() {
-        this.inner = HashMap<String, V>()
+        this.inner = JsonObject()
     }
 
-    public func getMap(): HashMap<String, V> {
+    public func getMap(): JsonObject {
         this.inner
     }
 
