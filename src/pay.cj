@@ -126,8 +126,9 @@ public class PayClient <: Payer {
             requestBuild.url(this.ApiUrl).body(payload).post()
         }
         var request = requestBuild.header("Content-Type", "application/x-www-form-urlencoded").build()
-        let res = httpclient.send(request)
-        httpclient.close()
+        var res = httpclient.send(request)
+        println(res.toString())
+        // httpclient.close()
         let length = match (res.bodySize) {
             case Some(data) => data
             case _ => 0
