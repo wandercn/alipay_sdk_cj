@@ -5,8 +5,9 @@ import std.collection.*
 
 public func getNowBeijingTimeStr(): String {
     let timeFormat = "yyyy/MM/dd HH:mm:ss"
-    let loc = TimeZone.load("Asia/Shanghai")
-    let nowTime = DateTime.now().inTimeZone(loc)
+    // let loc = TimeZone.load("Asia/Shanghai")
+    // let nowTime = DateTime.now().inTimeZone(loc)
+    let nowTime = DateTime.now()
     return nowTime.toString(timeFormat)
 }
 
