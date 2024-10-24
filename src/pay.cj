@@ -119,14 +119,15 @@ public class PayClient <: Payer {
         let payload = req.encodePayload()
         var tlsConfig = TlsClientConfig()
         var httpclient = ClientBuilder().tlsConfig(tlsConfig).build()
-        var requestBuild = HttpRequestBuilder()
-        if (method == "alipay.trade.precreate") {
-            requestBuild.url(this.ApiUrl + "?" + payload).get()
-        } else {
-            requestBuild.url(this.ApiUrl).body(payload).post()
-        }
-        var request = requestBuild.header("Content-Type", "application/x-www-form-urlencoded").build()
-        var res = httpclient.send(request)
+        // var requestBuild = HttpRequestBuilder()
+        // if (method == "alipay.trade.precreate") {
+        //     requestBuild.url(this.ApiUrl + "?" + payload).get()
+        // } else {
+        //     requestBuild.url(this.ApiUrl).body(payload).post()
+        // }
+        // var request = requestBuild.header("Content-Type", "application/x-www-form-urlencoded").build()
+        // var res = httpclient.send(request)
+        var res =httpclient.get(this.getApiUrl())
         println(res.toString())
         httpclient.close()
         let length = match (res.bodySize) {
