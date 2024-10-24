@@ -113,7 +113,7 @@ public class Request <: Serializable<Request> & Requester { // 是否必填	最�
     }
 
     public func setBizContent(b: biz.BizContenter): Requester {
-        this.bizContent = b.getMap().serialize().toJson().toJsonString()
+        this.bizContent = b.getMap().toString()
         return this
     }
 
