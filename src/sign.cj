@@ -91,8 +91,8 @@ func formatPublicKey(raw: String): String {
 }
 
 func formatKey(raw: String, prefix: String, suffix: String, lineCount: Int): String {
-    var byteArrayStream = ByteArrayStream()
-    let buffer = StringWriter(byteArrayStream)
+    var byteBuffer = ByteBuffer()
+    let buffer = StringWriter(byteBuffer)
     buffer.write(prefix)
     buffer.write("\n")
     let rawLen = lineCount
@@ -117,5 +117,5 @@ func formatKey(raw: String, prefix: String, suffix: String, lineCount: Int): Str
     buffer.write(suffix)
     buffer.write("\n")
     buffer.flush()
-    return byteArrayStream.readString()
+    return readString(byteBuffer)
 }
