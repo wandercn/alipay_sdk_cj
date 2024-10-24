@@ -118,7 +118,8 @@ public class PayClient <: Payer {
         let method = req.getMethod()
         let payload = req.encodePayload()
         var tlsConfig = TlsClientConfig()
-    
+        tlsConfig.verifyMode = TrustAll
+        
         var httpclient = ClientBuilder().tlsConfig(tlsConfig).build()
         var requestBuild = HttpRequestBuilder()
         if (method == "alipay.trade.precreate") {
