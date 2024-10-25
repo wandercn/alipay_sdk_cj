@@ -151,8 +151,10 @@ public class PayClient <: Payer {
                 // 同步验签
                 func syncVerifySign(response: Array<Byte>): Bool {
                     println("测试")
-                    println(response.toString())
-                    var result = JsonObject.fromStr(response.toString())
+                   println(String.fromUtf8(response)) 
+                    var result = JsonObject.fromStr(String.fromUtf8(response))
+                    println("result:")
+                    println(result)
                     // 闭包，获取response
                     func getRawSource(): String {
                         let responseKey = getResponseKey(bizContent)
