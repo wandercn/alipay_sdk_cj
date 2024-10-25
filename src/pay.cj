@@ -158,7 +158,7 @@ public class PayClient <: Payer {
                     
                     var result = response.serialize().toJson()
                     println("result:")
-                    println(result)
+                    println(result.toJsonString())
                     // 闭包，获取response
                     func getRawSource(): String {
                         let responseKey = getResponseKey(bizContent)
