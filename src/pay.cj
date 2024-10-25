@@ -156,7 +156,7 @@ public class PayClient <: Payer {
                 func syncVerifySign(response: Array<Byte>): Bool {
                     println("测试")
                     
-                    var result = JsonValue.fromStr(response.toString())
+                    var result = response.serialize().toJson()
                     println("result:")
                     println(result)
                     // 闭包，获取response
