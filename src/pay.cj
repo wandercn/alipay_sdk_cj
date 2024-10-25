@@ -135,13 +135,16 @@ public class PayClient <: Payer {
             case Some(data) => data
             case _ => 0
         }
+        let buffer= ByteBuffer()
         var buf = Array<Byte>(8, repeat: 0)
         while (res.body.read(buf) > 0) {
             println("read =======================1")
+            buffer.write(buf)
+            buf.fill(0)
+            println(buffer.bytes())
         }
         httpclient.close()
-        println(buf.serialize().toJson().toJsonString())
-        return String.fromUtf8(buf).toArray()
+        return String.fromUtf8(readToEnd(buffer)).toArray()
     }
 
     public func doAlipay(bizContent: BizContenter): Array<Byte> {
