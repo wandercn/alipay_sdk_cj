@@ -5,8 +5,9 @@ import net.http.*
 import net.tls.*
 import encoding.json.*
 import encoding.url.*
-import std.collection.HashMap
+import std.collection.*
 import serialization.serialization.*
+import std.io.*
 
 public interface Payer {
     func getApiUrl(): String
@@ -135,7 +136,7 @@ public class PayClient <: Payer {
             case Some(data) => data
             case _ => 0
         }
-        let buf = Array<Byte>(length, repeat: 0)
+        let buf = ArrayList<Byte>().toArray()
         res.body.read(buf)
 
         return buf
