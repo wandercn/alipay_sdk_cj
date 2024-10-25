@@ -119,7 +119,7 @@ public class PayClient <: Payer {
         let payload = req.encodePayload()
         var tlsConfig = TlsClientConfig()
         tlsConfig.verifyMode = TrustAll
-        
+
         var httpclient = ClientBuilder().tlsConfig(tlsConfig).build()
         var requestBuild = HttpRequestBuilder()
         if (method == "alipay.trade.precreate") {
@@ -150,12 +150,14 @@ public class PayClient <: Payer {
                 let res = this.execute(request)
                 // 同步验签
                 func syncVerifySign(response: Array<Byte>): Bool {
-                    var result = response.toString()
+                    println("测试")
+                    println(response.toString())
+                    var result = JsonObject.fromStr(response.toString())
                     // 闭包，获取response
                     func getRawSource(): String {
                         let responseKey = getResponseKey(bizContent)
 
-                        if (let Some(raw) <- JsonValue.fromStr(result).asObject().get(responseKey)) {
+                        if (let Some(raw) <- result.asObject().get(responseKey)) {
                             return raw.toString()
                         } else {
                             return ""
@@ -163,7 +165,7 @@ public class PayClient <: Payer {
                     }
                     // 闭包，获取签名
                     func getSignture(): String {
-                        if (let Some(sign) <- JsonValue.fromStr(result).asObject().get("sign")) {
+                        if (let Some(sign) <- result.asObject().get("sign")) {
                             return sign.toString()
                         } else {
                             return ""
