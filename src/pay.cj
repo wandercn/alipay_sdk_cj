@@ -140,6 +140,7 @@ public class PayClient <: Payer {
             println("read =======================1")
         }
         httpclient.close()
+        println(buf.serialize().toJson().toJsonString())
         return String.fromUtf8(buf).toArray()
     }
 
