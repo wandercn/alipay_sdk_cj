@@ -160,13 +160,13 @@ public class PayClient <: Payer {
                     println("测试")
 
                     var result = response.serialize().toJson()
-                    println("result:")
-                    println(result.toJsonString())
+                    println("result:${result}")
                     // 闭包，获取response
                     func getRawSource(): String {
                         let responseKey = getResponseKey(bizContent)
 
                         if (let Some(raw) <- result.asObject().get(responseKey)) {
+                             println("raw:${raw}")
                             return raw.toString()
                         } else {
                             return ""
@@ -175,6 +175,7 @@ public class PayClient <: Payer {
                     // 闭包，获取签名
                     func getSignture(): String {
                         if (let Some(sign) <- result.asObject().get("sign")) {
+                                println("sign:${sign}")
                             return sign.toString()
                         } else {
                             return ""
