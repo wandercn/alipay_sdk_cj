@@ -125,7 +125,7 @@ public class Request <: Serializable<Request> & Requester { // 是否必填	最�
         var signer = newSigner(this.signType)
         signer.setPrivateKey(this.privateKey)
         var signSource = this.getSignSource()
-        var signSourceSplits = signSource.split("=")
+        var signSourceSplits = signSource.split("&")
         signSourceSplits.sort(stable: true)
         var sortStr = String.join(signSourceSplits, delimiter: "&")
         let signture = signer.sign(sortStr)
