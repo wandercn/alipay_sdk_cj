@@ -130,15 +130,16 @@ public class PayClient <: Payer {
         }
         var request = requestBuild.header("Content-Type", "application/x-www-form-urlencoded").build()
         var res = httpclient.send(request)
+        println(res)
         let length = match (res.bodySize) {
             case Some(data) => data
             case _ => 0
         }
+        println(length)
         let bufIn = BufferedInputStream(res.body)
         var buf = ByteBuffer()
         let bufOut = BufferedOutputStream(buf)
         copy(bufIn, to: bufOut)
-        println(String.fromUtf8(buf.bytes()))
 
         httpclient.close()
         return buf.bytes()
