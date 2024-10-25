@@ -130,7 +130,7 @@ public class PayClient <: Payer {
         }
         var request = requestBuild.header("Content-Type", "application/x-www-form-urlencoded").build()
         var res = httpclient.send(request)
-        println(res.request)
+       println(res)
         let length = match (res.bodySize) {
             case Some(data) => data
             case _ => 0
