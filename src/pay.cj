@@ -118,6 +118,7 @@ public class PayClient <: Payer {
     public func execute(req: Requester): Array<Byte> {
         let method = req.getMethod()
         let payload = req.encodePayload()
+        print("payload: {payload}")
         var tlsConfig = TlsClientConfig()
         tlsConfig.verifyMode = TrustAll
 
@@ -136,7 +137,7 @@ public class PayClient <: Payer {
             case _ => 0
         }
         let buffer= ByteBuffer()
-        var buf = Array<Byte>(1, repeat: 0)
+        var buf = Array<Byte>(1024, repeat: 0)
         while (res.body.read(buf) > 0) {
             println("read =======================1")
             buffer.write(buf)
@@ -220,7 +221,7 @@ public class PayClient <: Payer {
     // alipay.trade.create(统一收单交易创建接口)
     public func tradeCreate(biz: TradeCreateBiz): TradeCreateResponse {
         let body = this.doAlipay(biz)
-        var jsonV = JsonValue.fromStr(body.toString())
+        var jsonV = JsonValue.fromStr(String.fromUtf8(body))
         let dm = DataModel.fromJson(jsonV)
         var res = TradeCreateResponse.deserialize(dm)
 
