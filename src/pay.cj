@@ -130,19 +130,18 @@ public class PayClient <: Payer {
         }
         var request = requestBuild.header("Content-Type", "application/x-www-form-urlencoded").build()
         var res = httpclient.send(request)
-        println(res)
+        println(res.request)
         let length = match (res.bodySize) {
             case Some(data) => data
             case _ => 0
         }
-        println(length)
-        let bufIn = BufferedInputStream(res.body)
         var buf = ByteBuffer()
-        let bufOut = BufferedOutputStream(buf)
-        copy(bufIn, to: bufOut)
-
+        let arr = Array<Byte>( 4096, repeat: 0)
+        while (res.body.read(arr)>0) {
+            buf.write(arr)
+        }
         httpclient.close()
-        return buf.bytes()
+        return String.fromUtf8(readToEnd(buf)).toArray()
     }
 
     public func doAlipay(bizContent: BizContenter): Array<Byte> {
@@ -155,7 +154,7 @@ public class PayClient <: Payer {
                 // 同步验签
                 func syncVerifySign(response: Array<Byte>): Bool {
                     println("测试")
-                    
+
                     var result = response.serialize().toJson()
                     println("result:")
                     println(result.toJsonString())
