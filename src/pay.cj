@@ -136,7 +136,7 @@ public class PayClient <: Payer {
             case _ => 0
         }
         let buffer= ByteBuffer()
-        var buf = Array<Byte>(8, repeat: 0)
+        var buf = Array<Byte>(1, repeat: 0)
         while (res.body.read(buf) > 0) {
             println("read =======================1")
             buffer.write(buf)
