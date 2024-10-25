@@ -136,10 +136,10 @@ public class PayClient <: Payer {
             case _ => 0
         }
         var buf = ByteBuffer()
-        var arr = Array<Byte>(4096,repat:0)
+        var arr = Array<Byte>(4096, repeat: 0)
         while (res.body.read(arr)>0) {
             buf.write(arr)
-        arr = Array<Byte>(4096,repat:0) 
+        arr = Array<Byte>(4096,repeat:0) 
         }
         buf.flush()
         httpclient.close()
