@@ -135,7 +135,7 @@ public class PayClient <: Payer {
             case Some(data) => data
             case _ => 0
         }
-        var buf = Array<Byte>(length, repeat: 0)
+        var buf = Array<Byte>(8, repeat: 0)
         while (res.body.read(buf) > 0) {
             println("read =======================1")
         }
