@@ -118,7 +118,7 @@ public class PayClient <: Payer {
     public func execute(req: Requester): Array<Byte> {
         let method = req.getMethod()
         let payload = req.encodePayload()
-        print("payload: {payload}")
+        print("payload: ${payload}")
         var tlsConfig = TlsClientConfig()
         tlsConfig.verifyMode = TrustAll
 
