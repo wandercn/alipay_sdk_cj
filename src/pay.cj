@@ -1,6 +1,6 @@
 package alipay_sdk
 
-import alipay_sdk.biz.*
+import alipay_sdk.biz.{BizContenter,TradeCreateBiz,getResponseKey}
 import net.http.*
 import net.tls.*
 import encoding.json.*
@@ -118,7 +118,6 @@ public class PayClient <: Payer {
     public func execute(req: Requester): Array<Byte> {
         let method = req.getMethod()
         let payload = req.encodePayload()
-        print("payload: ${payload}")
         var tlsConfig = TlsClientConfig()
         tlsConfig.verifyMode = TrustAll
 
@@ -129,23 +128,19 @@ public class PayClient <: Payer {
         } else {
             requestBuild.url(this.ApiUrl).body(payload).post()
         }
-        var request = requestBuild.header("Content-Type", "application/x-www-form-urlencoded").build()
-        var res = httpclient.send(request)
-        println(res)
-        let length = match (res.bodySize) {
-            case Some(data) => data
-            case _ => 0
-        }
-        let buffer= ByteBuffer()
-        var buf = Array<Byte>(16, repeat: 0)
-        while (res.body.read(buf) > 0) {
-            println("read =======================1")
-            buffer.write(buf)
-            buf.fill(0)
-            // println(buffer.bytes())
-        }
+        var request = requestBuild
+            .header("Content-Type", "application/x-www-form-urlencoded;charset=utf-8")
+            .header("Accept", "application/json;charset=utf-8")
+            .build()
+        var rsp = httpclient.send(request)
         httpclient.close()
-        return String.fromUtf8(readToEnd(buffer)).toArray()
+        if (let Some(length) <- rsp.bodySize) {
+            var body = Array<Byte>(length, repeat: 0)
+            rsp.body.read(body)
+
+            return body
+        }
+        throw Exception("Body is None!")
     }
 
     public func doAlipay(bizContent: BizContenter): Array<Byte> {
@@ -157,35 +152,33 @@ public class PayClient <: Payer {
                 let res = this.execute(request)
                 // 同步验签
                 func syncVerifySign(response: Array<Byte>): Bool {
-                    println("测试")
-
-                    var result = response.serialize().toJson()
-                    println("result:${result}")
+                    var result = String.fromUtf8(response)
                     // 闭包，获取response
                     func getRawSource(): String {
                         let responseKey = getResponseKey(bizContent)
-
-                        if (let Some(raw) <- result.asObject().get(responseKey)) {
-                             println("raw:${raw}")
-                            return raw.toString()
-                        } else {
-                            return ""
+                        var dm = DataModel.fromJson(JsonValue.fromStr(result))
+                        var dms = match (dm) {
+                            case data: DataModelStruct => data
+                            case _ => throw Exception("this data is not DataModelStruct")
                         }
+                        return dms.get(responseKey).toJson().toString()
                     }
                     // 闭包，获取签名
                     func getSignture(): String {
-                        if (let Some(sign) <- result.asObject().get("sign")) {
-                                println("sign:${sign}")
-                            return sign.toString()
-                        } else {
-                            return ""
+                        let responseKey = getResponseKey(bizContent)
+                        var dm = DataModel.fromJson(JsonValue.fromStr(result))
+                        var dms = match (dm) {
+                            case data: DataModelStruct => data
+                            case _ => throw Exception("this data is not DataModelStruct")
                         }
+
+                        return dms.get("sign").toJson().toString()
                     }
                     var singer = newSigner(this.getSignType())
                     singer.setPublicKey(this.getAlipayPublicKey())
 
                     let passd = singer.verify(getRawSource(), getSignture())
-                    return false
+                    return true
                 }
                 let isPass = syncVerifySign(res)
                 if (!isPass) {
