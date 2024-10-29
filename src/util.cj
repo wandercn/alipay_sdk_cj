@@ -1,11 +1,11 @@
 package alipay_sdk
 
-import std.time.*
-import std.collection.*
+import std.time.{TimeZone, DateTime}
+import std.collection.HashMap
 
 public func getNowBeijingTimeStr(): String {
-    let timeFormat = "yyyy/MM/dd HH:mm:ss"
-    let loc = TimeZone("UTC",8*Duration.hour)
+    let timeFormat = "yyyy-MM-dd HH:mm:ss"
+    let loc = TimeZone("UTC", 8 * Duration.hour)
     let nowTime = DateTime.now().inTimeZone(loc)
     return nowTime.toString(timeFormat)
 }
@@ -48,4 +48,20 @@ func buildHiddenField(key: String, value: String): String {
     sb.append(newValue)
     sb.append("\">\n")
     return sb.toString()
+}
+// 使用 replace 实现简单的 URL 编码
+func queryEscape(input: String) {
+    var encoded = input
+    encoded = encoded.replace('$', '%24')
+    encoded = encoded.replace('&', '%26')
+    encoded = encoded.replace(' ', '%20')
+    encoded = encoded.replace(',', '%2C')
+    encoded = encoded.replace('/', '%2F')
+    encoded = encoded.replace(':', '%3A')
+    encoded = encoded.replace(';', '%3B')
+    encoded = encoded.replace('=', '%3D')
+    encoded = encoded.replace('?', '%3F')
+    encoded = encoded.replace('@', '%40')
+    encoded = encoded.replace('+', '%2B')
+    return encoded
 }

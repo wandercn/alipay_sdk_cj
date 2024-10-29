@@ -1,13 +1,11 @@
 package alipay_sdk
 
-import alipay_sdk.biz.{BizContenter,TradeCreateBiz,getResponseKey}
-import net.http.*
-import net.tls.*
-import encoding.json.*
-import encoding.url.*
-import std.collection.*
-import serialization.serialization.*
-import std.io.*
+import alipay_sdk.biz.{BizContenter, TradeCreateBiz, getResponseKey}
+import net.http.{HttpResponse, ClientBuilder, Client, HttpRequestBuilder}
+import net.tls.{TlsClientConfig, CertificateVerifyMode}
+import encoding.json.{JsonValue, ToJson}
+import std.collection.HashMap
+import serialization.serialization.{DataModel, Serializable, DataModelStruct}
 
 public interface Payer {
     func getApiUrl(): String
@@ -211,8 +209,7 @@ public class PayClient <: Payer {
         return clientSdkRequest.toArray()
     }
 
-    // https://opendocs.alipay.com/apis/api_1/alipay.trade.create
-    // alipay.trade.create(统一收单交易创建接口)
+    //alipay.trade.create(统一收单交易创建接口)
     public func tradeCreate(biz: TradeCreateBiz): TradeCreateResponse {
         let body = this.doAlipay(biz)
         var jsonV = JsonValue.fromStr(String.fromUtf8(body))

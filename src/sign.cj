@@ -1,10 +1,9 @@
 package alipay_sdk
 
-import crypto.keys.*
-import crypto.x509.*
-import std.io.*
-import crypto.digest.*
-import std.crypto.digest.*
+import crypto.keys.{RSAPrivateKey,RSAPublicKey,PadOption}
+import std.io.{ByteBuffer,StringWriter,readString}
+import crypto.digest.SHA256
+import std.crypto.digest.digest
 import encoding.base64
 
 public interface Signer {
@@ -43,7 +42,7 @@ public struct SignSHA256WithRSA <: Signer {
             var h = SHA256()
             var md = digest(h, source)
             let signatureByte = priv.sign(h, md, padType: PKCS1)
-            return base64.toBase64String(signatureByte).toString()
+            return base64.toBase64String(signatureByte)
         } else {
             throw Exception("PrivateKey is empty")
         }
@@ -68,26 +67,26 @@ public func loadPublicKey(publicStr: String): RSAPublicKey {
     return RSAPublicKey.decodeFromPem(formatPublicKey(publicStr))
 }
 
-const kPublicKeyPrefix = "-----BEGIN PUBLIC KEY-----"
-const kPublicKeySuffix = "-----END PUBLIC KEY-----"
-const kPKCS1Prefix = "-----BEGIN RSA PRIVATE KEY-----"
-const KPKCS1Suffix = "-----END RSA PRIVATE KEY-----"
-const kPKCS8Prefix = "-----BEGIN PRIVATE KEY-----"
-const KPKCS8Suffix = "-----END PRIVATE KEY-----"
-const kPublicKeyType = "PUBLIC KEY"
-const kPrivateKeyType = "PRIVATE KEY"
-const kRSAPrivateKeyType = "RSA PRIVATE KEY"
+const PUBLIC_KEY_PREFIX = "-----BEGIN PUBLIC KEY-----"
+const PUBLIC_KEY_SUFFIX = "-----END PUBLIC KEY-----"
+const PKCS1_PREFIX = "-----BEGIN RSA PRIVATE KEY-----"
+const PKCS1_SUFFIX = "-----END RSA PRIVATE KEY-----"
+const PKCS8_PREFIX = "-----BEGIN PRIVATE KEY-----"
+const PKCS8_SUFFIX = "-----END PRIVATE KEY-----"
+const PUBLIC_KEY_TYPE = "PUBLIC KEY"
+const PRIVATE_KEY_TYPE = "PRIVATE KEY"
+const RSA_PRIVATE_KEY_TYPE = "RSA PRIVATE KEY"
 
 func formatPKCS1PrivateKey(raw: String): String {
-    return formatKey(raw, kPKCS1Prefix, KPKCS1Suffix, 64)
+    return formatKey(raw, PKCS1_PREFIX, PKCS1_SUFFIX, 64)
 }
 
 func formatPKCS8PrivateKey(raw: String): String {
-    return formatKey(raw, kPKCS8Prefix, KPKCS8Suffix, 64)
+    return formatKey(raw, PKCS8_PREFIX, PKCS8_SUFFIX, 64)
 }
 
 func formatPublicKey(raw: String): String {
-    return formatKey(raw, kPublicKeyPrefix, kPublicKeySuffix, 64)
+    return formatKey(raw, PUBLIC_KEY_PREFIX, PUBLIC_KEY_SUFFIX, 64)
 }
 
 func formatKey(raw: String, prefix: String, suffix: String, lineCount: Int): String {
