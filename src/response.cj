@@ -1,6 +1,6 @@
 package alipay_sdk
 
-import serialization.serialization.{Serializable,DataModel,DataModelStruct,field}
+import serialization.serialization.{Serializable, DataModel, DataModelStruct, field}
 
 public class TradeCreateResponse <: Serializable<TradeCreateResponse> {
     var response: CreateResponse // alipay_trade_create_response
