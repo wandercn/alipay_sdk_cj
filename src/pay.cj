@@ -170,13 +170,13 @@ public class PayClient <: Payer {
                             case _ => throw Exception("this data is not DataModelStruct")
                         }
 
-                        return dms.get("sign").toJson().toString()
+                        return String.deserialize(dms.get("sign"))
                     }
                     var singer = newSigner(this.getSignType())
                     singer.setPublicKey(this.getAlipayPublicKey())
 
                     let passd = singer.verify(getRawSource(), getSignture())
-                    return true
+                    return passd
                 }
                 let isPass = syncVerifySign(res)
                 if (!isPass) {

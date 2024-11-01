@@ -1,7 +1,7 @@
 package alipay_sdk
 
-import crypto.keys.{RSAPrivateKey,RSAPublicKey,PadOption}
-import std.io.{ByteBuffer,StringWriter,readString}
+import crypto.keys.{RSAPrivateKey, RSAPublicKey, PadOption}
+import std.io.{ByteBuffer, StringWriter, readString}
 import crypto.digest.SHA256
 import std.crypto.digest.digest
 import encoding.base64
@@ -52,7 +52,11 @@ public struct SignSHA256WithRSA <: Signer {
         if (let Some(pubKey) <- this.publicKey) {
             var h = SHA256()
             var md = digest(h, source)
-            return pubKey.verify(h, md, signature.toArray(), padType: PKCS1)
+            var decodeSign = base64.fromBase64String(signature)
+            match (decodeSign) {
+                case Some(signArr) => return pubKey.verify(h, md, signArr, padType: PKCS1)
+                case None => throw Exception("base64 decode is failed")
+            }
         } else {
             throw Exception("publicKey is empty")
         }
