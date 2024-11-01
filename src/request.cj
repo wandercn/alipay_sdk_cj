@@ -1,7 +1,7 @@
 package alipay_sdk
 
 import alipay_sdk.biz
-import serialization.serialization.{Serializable, DataModelStruct, DataModel, field}
+import serialization.serialization.{Serializable, DataModelStruct, DataModel, field, Field}
 import std.collection.{ArrayList, HashMap}
 import std.sort.stableSort
 
@@ -61,21 +61,28 @@ public class Request <: Serializable<Request> & Requester {
     }
 
     public func serialize(): DataModel {
+        // 闭包
+        func bindString(key: String, value: String) {
+            return field<String>(key, value)
+        }
+        func bindOptionString(key: String, value: Option<String>) {
+            return field<Option<String>>(key, value)
+        }
         return DataModelStruct()
-            .add(field<String>("app_cert_sn", appCertSn))
-            .add(field<String>("alipay_root_cert_sn", alipayRootCertSn))
-            .add(field<String>("app_id", appID))
-            .add(field<Option<String>>("app_auth_token", appAuthToken))
-            .add(field<String>("method", method))
-            .add(field<String>("format", format))
-            .add(field<String>("charset", charset))
-            .add(field<String>("sign_type", signType))
-            .add(field<String>("sign", sign))
-            .add(field<String>("timestamp", timestamp))
-            .add(field<String>("version", version))
-            .add(field<Option<String>>("notify_url", notifyUrl))
-            .add(field<Option<String>>("return_url", returnUrl))
-            .add(field<String>("biz_content", bizContent))
+            .add(bindString("app_cert_sn", appCertSn))
+            .add(bindString("alipay_root_cert_sn", alipayRootCertSn))
+            .add(bindString("app_id", appID))
+            .add(bindOptionString("app_auth_token", appAuthToken))
+            .add(bindString("method", method))
+            .add(bindString("format", format))
+            .add(bindString("charset", charset))
+            .add(bindString("sign_type", signType))
+            .add(bindString("sign", sign))
+            .add(bindString("timestamp", timestamp))
+            .add(bindString("version", version))
+            .add(bindOptionString("notify_url", notifyUrl))
+            .add(bindOptionString("return_url", returnUrl))
+            .add(bindString("biz_content", bizContent))
     }
     public static func deserialize(dm: DataModel): Request {
         var dms = match (dm) {
