@@ -5,7 +5,7 @@ import std.collection.HashMap
 
 public func getNowBeijingTimeStr(): String {
     let timeFormat = "yyyy-MM-dd HH:mm:ss"
-    let loc = TimeZone("UTC", 8 * Duration.hour)
+    let loc = TimeZone("CST", 8 * Duration.hour)
     let nowTime = DateTime.now().inTimeZone(loc)
     return nowTime.toString(timeFormat)
 }
