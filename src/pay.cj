@@ -1,11 +1,13 @@
 package alipay_sdk
 
-import alipay_sdk.biz.{BizContenter, TradeCreateBiz, getResponseKey}
 import net.http.{HttpResponse, ClientBuilder, Client, HttpRequestBuilder}
 import net.tls.{TlsClientConfig, CertificateVerifyMode}
 import encoding.json.{JsonValue, ToJson}
 import std.collection.HashMap
 import serialization.serialization.{DataModel, Serializable, DataModelStruct}
+import alipay_sdk.biz.{BizContenter, TradeCreateBiz, getResponseKey, TradePayBiz, TradeCloseBiz, TradeQueryBiz, 
+    TradeRefundBiz, TradeAppPayBiz, TradeCancelBiz, TradeWapPayBiz, TradePagePayBiz, TradePrecreateBiz}
+import alipay_sdk.response.{TradeCreateResponse, TradePayResponse}
 
 public interface Payer {
     func getApiUrl(): String
@@ -25,12 +27,9 @@ public interface Payer {
     func setSignType(signType: String): Unit
     func setCharset(chartset: String): Unit
 
-    // func execute(Requester) (*[]byte, error)
     func execute(req: Requester): Array<Byte>
-    // DoAlipay(biz.BizContenter) (*[]byte, error)
     func doAlipay(bizContent: BizContenter): Array<Byte>
 
-    // TradeCreate(*biz.TradeCreateBiz) (*TradeCreateResponse, error)
     func tradeCreate(biz: TradeCreateBiz): TradeCreateResponse
     // TradePay(*biz.TradePayBiz) (*TradePayResponse, error)
     // TradePrecreate(*biz.TradePrecreateBiz) (*TradePrecreateResponse, error)
@@ -61,7 +60,6 @@ public class PayClient <: Payer {
     var ReturnUrl: String = "" //`json:"return_url,omitempty"` // 否 前台回跳地址 return_url 自动跳转回商户页面
     var NotifyUrl: String = "" //`json:"notify_url,omitempty"` // 支付宝服务器主动通知callback商户服务器里指定的页面http/https路径。
 
-    // var IsProd: Bool //`json:"-"`                    // 是否生产环境
     public func builder(): PayClientBuilder {
         return PayClientBuilder()
     }
@@ -208,13 +206,27 @@ public class PayClient <: Payer {
         let clientSdkRequest = request.encodePayload()
         return clientSdkRequest.toArray()
     }
-
-    //alipay.trade.create(统一收单交易创建接口)
+    /**
+     * https://opendocs.alipay.com/apis/api_1/alipay.trade.create
+     * alipay.trade.create(统一收单交易创建接口)
+     */
     public func tradeCreate(biz: TradeCreateBiz): TradeCreateResponse {
         let body = this.doAlipay(biz)
         var jsonV = JsonValue.fromStr(String.fromUtf8(body))
         let dm = DataModel.fromJson(jsonV)
         var res = TradeCreateResponse.deserialize(dm)
+
+        return res
+    }
+    /**
+     * https://opendocs.alipay.com/apis/api_1/alipay.trade.pay
+     * alipay.trade.pay(统一收单交易支付接口)
+     */
+    public func TradePay(biz: TradePayBiz): TradePayResponse {
+        let body = this.doAlipay(biz)
+        var jsonV = JsonValue.fromStr(String.fromUtf8(body))
+        let dm = DataModel.fromJson(jsonV)
+        var res = TradePayResponse.deserialize(dm)
 
         return res
     }
