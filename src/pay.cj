@@ -31,7 +31,7 @@ public interface Payer {
     func doAlipay(bizContent: BizContenter): Array<Byte>
 
     func tradeCreate(biz: TradeCreateBiz): TradeCreateResponse
-    func tradePay(biz: TradePagePayBiz): TradePayResponse
+    func tradePay(biz: TradePayBiz): TradePayResponse
     func tradeQuery(biz: TradeQueryBiz): TradeQueryResponse
     // TradePay(*biz.TradePayBiz) (*TradePayResponse, error)
     // TradePrecreate(*biz.TradePrecreateBiz) (*TradePrecreateResponse, error)
