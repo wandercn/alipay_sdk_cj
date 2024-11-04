@@ -4,3 +4,4 @@
 *.gcno
 /.vscode
 cjlintignore.cfg
+report.json
