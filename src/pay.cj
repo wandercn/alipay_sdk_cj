@@ -7,7 +7,7 @@ import std.collection.HashMap
 import serialization.serialization.{DataModel, Serializable, DataModelStruct}
 import alipay_sdk.biz.{BizContenter, TradeCreateBiz, getResponseKey, TradePayBiz, TradeCloseBiz, TradeQueryBiz, 
     TradeRefundBiz, TradeAppPayBiz, TradeCancelBiz, TradeWapPayBiz, TradePagePayBiz, TradePrecreateBiz}
-import alipay_sdk.response.{TradeCreateResponse, TradePayResponse}
+import alipay_sdk.response.{TradeCreateResponse, TradePayResponse, TradeQueryResponse}
 
 public interface Payer {
     func getApiUrl(): String
@@ -31,6 +31,8 @@ public interface Payer {
     func doAlipay(bizContent: BizContenter): Array<Byte>
 
     func tradeCreate(biz: TradeCreateBiz): TradeCreateResponse
+    func tradePay(biz: TradePagePayBiz): TradePayResponse
+    func tradeQuery(biz: TradeQueryBiz): TradeQueryResponse
     // TradePay(*biz.TradePayBiz) (*TradePayResponse, error)
     // TradePrecreate(*biz.TradePrecreateBiz) (*TradePrecreateResponse, error)
     // TradeAppPay(*biz.TradeAppPayBiz) (string, error)
@@ -222,12 +224,22 @@ public class PayClient <: Payer {
      * https://opendocs.alipay.com/apis/api_1/alipay.trade.pay
      * alipay.trade.pay(统一收单交易支付接口)
      */
-    public func TradePay(biz: TradePayBiz): TradePayResponse {
+    public func tradePay(biz: TradePayBiz): TradePayResponse {
         let body = this.doAlipay(biz)
         var jsonV = JsonValue.fromStr(String.fromUtf8(body))
         let dm = DataModel.fromJson(jsonV)
         var res = TradePayResponse.deserialize(dm)
-
+        return res
+    }
+    /**
+     *  Https://opendocs.alipay.com/apis/api_1/alipay.trade.query
+     * alipay.trade.query(统一收单线下交易查询)
+     */
+    public func tradeQuery(biz: TradeQueryBiz): TradeQueryResponse {
+        let body = this.doAlipay(biz)
+        var jsonV = JsonValue.fromStr(String.fromUtf8(body))
+        let dm = DataModel.fromJson(jsonV)
+        var res = TradeQueryResponse.deserialize(dm)
         return res
     }
 }

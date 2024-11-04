@@ -1,4 +1,5 @@
 package alipay_sdk.jsonhelper
+
 import serialization.serialization.{Serializable, DataModel, DataModelStruct, field}
 
 public interface GetDms {

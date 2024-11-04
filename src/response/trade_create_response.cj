@@ -4,7 +4,6 @@ import serialization.serialization.{Serializable, DataModel, DataModelStruct, fi
 import std.collection.ArrayList
 import alipay_sdk.jsonhelper.JsonHelper
 
-
 public class TradeCreateResponse <: Serializable<TradeCreateResponse> & JsonHelper {
     var response: CreateResponse = CreateResponse() // alipay_trade_create_response
     var sign: ?String = None // sign
