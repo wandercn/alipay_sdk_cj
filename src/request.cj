@@ -1,6 +1,7 @@
 package alipay_sdk
 
 import alipay_sdk.biz
+import alipay_sdk.jsonhelper.JsonHelper
 import serialization.serialization.{Serializable, DataModelStruct, DataModel, field, Field}
 import std.collection.{ArrayList, HashMap}
 import std.sort.stableSort
@@ -12,7 +13,7 @@ public interface Requester {
     func encodePayload(): String
 }
 
-public class Request <: Serializable<Request> & Requester {
+public class Request <: Serializable<Request> & Requester & JsonHelper {
     var privateKey: String = "" // rsa私钥单行文本字符串 
     var publicKey: String = "" // rsa公钥单行文本字符串
     var appCertSn: String = "" // 应用公钥证书 SN
@@ -61,13 +62,6 @@ public class Request <: Serializable<Request> & Requester {
     }
 
     public func serialize(): DataModel {
-        // 闭包
-        func bindString(key: String, value: String) {
-            return field<String>(key, value)
-        }
-        func bindOptionString(key: String, value: Option<String>) {
-            return field<Option<String>>(key, value)
-        }
         return DataModelStruct()
             .add(bindString("app_cert_sn", appCertSn))
             .add(bindString("alipay_root_cert_sn", alipayRootCertSn))
@@ -85,33 +79,21 @@ public class Request <: Serializable<Request> & Requester {
             .add(bindString("biz_content", bizContent))
     }
     public static func deserialize(dm: DataModel): Request {
-        var dms = match (dm) {
-            case data: DataModelStruct => data
-            case _ => throw Exception("this data is not DataModelStruct")
-        }
-
         var res = Request()
-        // 闭包
-        func stringGet(key: String) {
-            return String.deserialize(dms.get(key))
-        }
-        func optionStringGet(key: String) {
-            return Option<String>.deserialize(dms.get(key))
-        }
-        res.appCertSn = stringGet("app_cert_sn")
-        res.alipayRootCertSn = stringGet("alipay_root_cert_sn")
-        res.appID = stringGet("app_id")
-        res.appAuthToken = stringGet("app_auth_token")
-        res.method = stringGet("method")
-        res.format = stringGet("format")
-        res.charset = stringGet("charset")
-        res.signType = stringGet("sign_type")
-        res.sign = stringGet("sign")
-        res.timestamp = stringGet("timestamp")
-        res.version = stringGet("version")
-        res.notifyUrl = optionStringGet("notify_url")
-        res.returnUrl = optionStringGet("return_url")
-        res.bizContent = stringGet("biz_content")
+        res.appCertSn = stringGet("app_cert_sn",dm)
+        res.alipayRootCertSn = stringGet("alipay_root_cert_sn",dm)
+        res.appID = stringGet("app_id",dm)
+        res.appAuthToken = stringGet("app_auth_token",dm)
+        res.method = stringGet("method",dm)
+        res.format = stringGet("format",dm)
+        res.charset = stringGet("charset",dm)
+        res.signType = stringGet("sign_type",dm)
+        res.sign = stringGet("sign",dm)
+        res.timestamp = stringGet("timestamp",dm)
+        res.version = stringGet("version",dm)
+        res.notifyUrl = optionStringGet("notify_url",dm)
+        res.returnUrl = optionStringGet("return_url",dm)
+        res.bizContent = stringGet("biz_content",dm)
         return res
     }
     public func getMethod(): String {
