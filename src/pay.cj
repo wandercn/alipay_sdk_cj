@@ -33,12 +33,9 @@ public interface Payer {
     func tradeCreate(biz: TradeCreateBiz): TradeCreateResponse
     func tradePay(biz: TradePayBiz): TradePayResponse
     func tradeQuery(biz: TradeQueryBiz): TradeQueryResponse
-    // TradePay(*biz.TradePayBiz) (*TradePayResponse, error)
-    // TradePrecreate(*biz.TradePrecreateBiz) (*TradePrecreateResponse, error)
     // TradeAppPay(*biz.TradeAppPayBiz) (string, error)
     // TradeWapPay(*biz.TradeWapPayBiz) (string, error)
     // TradePagePay(*biz.TradePagePayBiz) (string, error)
-    // TradeQuery(*biz.TradeQueryBiz) (*TradeQueryResponse, error)
     // TradeCancel(*biz.TradeCancelBiz) (*TradeCancelResponse, error)
     // TradeRefund(*biz.TradeRefundBiz) (*TradeRefundResponse, error)
     // TradePageRefund(*biz.TradePageRefundBiz) (*TradePageRefundResponse, error)
