@@ -6,8 +6,11 @@ import encoding.json.{JsonValue, ToJson}
 import std.collection.HashMap
 import serialization.serialization.{DataModel, Serializable, DataModelStruct}
 import alipay_sdk.biz.{BizContenter, TradeCreateBiz, getResponseKey, TradePayBiz, TradeCloseBiz, TradeQueryBiz, 
-    TradeRefundBiz, TradeAppPayBiz, TradeCancelBiz, TradeWapPayBiz, TradePagePayBiz, TradePrecreateBiz}
-import alipay_sdk.response.{TradeCreateResponse, TradePayResponse, TradeQueryResponse}
+    TradeRefundBiz, TradeAppPayBiz, TradeCancelBiz, TradeWapPayBiz, TradePagePayBiz, TradePrecreateBiz, 
+    TradePageRefundBiz, TradeFastpayRefundQueryBiz}
+import alipay_sdk.response.{TradeCreateResponse, TradePayResponse, TradeQueryResponse, TradeCancelResponse, 
+    TradeCloseResponse, TradeFastpayRefundQueryResponse, TradePageRefundResponse, TradePrecreateResponse, 
+    TradeRefundResponse}
 
 public interface Payer {
     func getApiUrl(): String
@@ -33,15 +36,15 @@ public interface Payer {
     func tradeCreate(biz: TradeCreateBiz): TradeCreateResponse
     func tradePay(biz: TradePayBiz): TradePayResponse
     func tradeQuery(biz: TradeQueryBiz): TradeQueryResponse
-    // TradeAppPay(*biz.TradeAppPayBiz) (string, error)
-    // TradeWapPay(*biz.TradeWapPayBiz) (string, error)
-    // TradePagePay(*biz.TradePagePayBiz) (string, error)
-    // TradeCancel(*biz.TradeCancelBiz) (*TradeCancelResponse, error)
-    // TradeRefund(*biz.TradeRefundBiz) (*TradeRefundResponse, error)
-    // TradePageRefund(*biz.TradePageRefundBiz) (*TradePageRefundResponse, error)
-    // TradeFastpayRefundQuery(*biz.TradeFastpayRefundQueryBiz) (*TradeFastpayRefundQueryResponse, error)
-    // TradeClose(*biz.TradeCloseBiz) (*TradeCloseResponse, error)
-    // AsyncVerifySign(rawbody []byte) (bool, error)
+    func tradeAppPay(biz: TradeAppPayBiz): String
+    func tradeWapPay(biz: TradeWapPayBiz): String
+    func tradePagePay(biz: TradePagePayBiz): String
+    func tradeCancel(biz: TradeCancelBiz): TradeCancelResponse
+    func tradeRefund(biz: TradeRefundBiz): TradeRefundResponse
+    func tradePageRefund(biz: TradePageRefundBiz): TradePageRefundResponse
+    func tradeFastpayRefundQuery(biz: TradeFastpayRefundQueryBiz): TradeFastpayRefundQueryResponse
+    func tradeClose(biz: TradeCloseBiz): TradeCloseResponse
+    // func asyncVerifySign(rawbody: Array<Byte>):Bool
 }
 
 public class PayClient <: Payer {
@@ -140,8 +143,8 @@ public class PayClient <: Payer {
 
     public func doAlipay(bizContent: BizContenter): Array<Byte> {
         match (bizContent.method()) {
-            case "alipay.trade.wap.pay" | "alipay.trade.page.pay" => return [1, 0]
-            case "alipay.trade.app.pay" => return [2, 0]
+            case "alipay.trade.wap.pay" | "alipay.trade.page.pay" => return this.createClienPageForm(bizContent)
+            case "alipay.trade.app.pay" => return this.createClienSdktRequest(bizContent)
             case _ =>
                 var request = Request(this).setBizContent(bizContent).setMethod(bizContent.method())
                 let res = this.execute(request)
@@ -229,7 +232,7 @@ public class PayClient <: Payer {
         return res
     }
     /**
-     *  Https://opendocs.alipay.com/apis/api_1/alipay.trade.query
+     * https://opendocs.alipay.com/apis/api_1/alipay.trade.query
      * alipay.trade.query(统一收单线下交易查询)
      */
     public func tradeQuery(biz: TradeQueryBiz): TradeQueryResponse {
@@ -237,6 +240,85 @@ public class PayClient <: Payer {
         var jsonV = JsonValue.fromStr(String.fromUtf8(body))
         let dm = DataModel.fromJson(jsonV)
         var res = TradeQueryResponse.deserialize(dm)
+        return res
+    }
+    /**
+     * https://opendocs.alipay.com/apis/api_1/alipay.trade.app.pay
+     * alipay.trade.app.pay(app支付接口2.0)后端只生成form数据给前端调用
+     */
+    public func tradeAppPay(biz: TradeAppPayBiz): String {
+        let body = this.doAlipay(biz)
+        return String.fromUtf8(body)
+    }
+    /**
+     * https://opendocs.alipay.com/apis/api_1/alipay.trade.wap.pay
+     * alipay.trade.wap.pay(手机网站支付接口2.0)后端只生成form数据给前端调用
+     */
+    public func tradeWapPay(biz: TradeWapPayBiz): String {
+        let body = this.doAlipay(biz)
+        return String.fromUtf8(body)
+    }
+    /**
+     * https://opendocs.alipay.com/apis/api_1/alipay.trade.page.pay
+     * alipay.trade.page.pay(统一收单下单并支付页面接口)后端只生成form数据给前端调用
+     */
+    public func tradePagePay(biz: TradePagePayBiz): String {
+        let body = this.doAlipay(biz)
+        return String.fromUtf8(body)
+    }
+    /**
+     * https://opendocs.alipay.com/apis/api_1/alipay.trade.cancel
+     * alipay.trade.cancel(统一收单交易撤销接口)
+     */
+    public func tradeCancel(biz: TradeCancelBiz): TradeCancelResponse {
+        let body = this.doAlipay(biz)
+        var jsonV = JsonValue.fromStr(String.fromUtf8(body))
+        let dm = DataModel.fromJson(jsonV)
+        var res = TradeCancelResponse.deserialize(dm)
+        return res
+    }
+    /**
+     * https://opendocs.alipay.com/apis/api_1/alipay.trade.refund
+     * alipay.trade.refund(统一收单交易退款接口)
+     */
+    public func tradeRefund(biz: TradeRefundBiz): TradeRefundResponse {
+        let body = this.doAlipay(biz)
+        var jsonV = JsonValue.fromStr(String.fromUtf8(body))
+        let dm = DataModel.fromJson(jsonV)
+        var res = TradeRefundResponse.deserialize(dm)
+        return res
+    }
+    /**
+     * https://opendocs.alipay.com/apis/api_1/alipay.trade.page.refund
+     * alipay.trade.page.refund(统一收单退款页面接口)
+     */
+    public func tradePageRefund(biz: TradePageRefundBiz): TradePageRefundResponse {
+        let body = this.doAlipay(biz)
+        var jsonV = JsonValue.fromStr(String.fromUtf8(body))
+        let dm = DataModel.fromJson(jsonV)
+        var res = TradePageRefundResponse.deserialize(dm)
+        return res
+    }
+    /**
+     * https://opendocs.alipay.com/apis/api_1/alipay.trade.fastpay.refund.query
+     * alipay.trade.fastpay.refund.query(统一收单交易退款查询)
+     */
+    public func tradeFastpayRefundQuery(biz: TradeFastpayRefundQueryBiz): TradeFastpayRefundQueryResponse {
+        let body = this.doAlipay(biz)
+        var jsonV = JsonValue.fromStr(String.fromUtf8(body))
+        let dm = DataModel.fromJson(jsonV)
+        var res = TradeFastpayRefundQueryResponse.deserialize(dm)
+        return res
+    }
+    /**
+     * https://opendocs.alipay.com/apis/api_1/alipay.trade.close
+     * alipay.trade.close(统一收单交易关闭接口)
+     */
+    public func tradeClose(biz: TradeCloseBiz): TradeCloseResponse {
+        let body = this.doAlipay(biz)
+        var jsonV = JsonValue.fromStr(String.fromUtf8(body))
+        let dm = DataModel.fromJson(jsonV)
+        var res = TradeCloseResponse.deserialize(dm)
         return res
     }
 }
