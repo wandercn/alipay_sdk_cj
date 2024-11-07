@@ -85,3 +85,11 @@ func newPayClient(): Payer {
 ## 参考项目
 
 https://github.com/wandercn/alipay_sdk_rust
+
+## 生成api文档
+
+```
+ cd alipay_sdk_cj
+ cjdoc config
+```
+api文档就生成在apidocs目录下是html文件，浏览器打开index.html就可以看到
