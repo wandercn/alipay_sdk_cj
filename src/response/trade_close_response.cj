@@ -22,8 +22,8 @@ public class TradeCloseResponse <: Serializable<TradeCloseResponse> & JsonHelper
 
     public func serialize(): DataModel {
         return DataModelStruct()
-            .add(bindString("sign", sign))
-            .add(bindOptionString("alipay_cert_sn", alipayCertSn))
+            .add(serSetOptionString("sign", sign))
+            .add(serSetOptionString("alipay_cert_sn", alipayCertSn))
             .add(field<CloseResponse>("alipay_trade_close_response", response))
     }
 
