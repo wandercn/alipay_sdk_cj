@@ -7,6 +7,12 @@ AliPay Sdk for 仓颉
 
  RSA2密钥生成请参考<https://opendocs.alipay.com/common/02kipl> 中的公钥证书方式生成，使用CSR文件申请，密钥格式必须使用PKCS1(非java适用)
 
+### 注意事项说明：
+
+master分支： 目前适配 Dev Channel 0.56.4
+
+beta_0.53.13分支：目前适配 Beta Channel 0.53.13
+
 ## Example
  ## apidoc
  <https://opendocs.alipay.com/apis/api_1/alipay.trade.create>
