@@ -9,6 +9,15 @@ AliPay Sdk for 仓颉
 * RSA2密钥生成请参考<https://opendocs.alipay.com/common/02kipl> 中的公钥证书方式生成，使用CSR文件申请，密钥格式必须使用PKCS1(非java适用)
 
 ## Example
+ ## apidoc
+ <https://opendocs.alipay.com/apis/api_1/alipay.trade.create>
+
+ ## alipay.trade.create(统一收单交易创建接口)
+
+ 注意：开发环境使用沙箱环境下的CSR公钥证书配置调试代码,生产环境需要切换正式申请的公钥证书配置。沙箱环境配置参考<https://opendocs.alipay.com/common/02kkv7>
+ 
+ (如下的Example使用的是沙箱环境下本人申请的自定义公钥证书) (已经适配新版沙箱环境,新版沙箱网关地址是https://openapi-sandbox.dl.alipaydev.com/gateway.do)
+
 
 ```cangjie
 
