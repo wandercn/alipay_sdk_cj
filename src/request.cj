@@ -1,3 +1,14 @@
+/*
+   Copyright (c) 2024-present wander@rustpub.com
+   hotbuild is licensed under Mulan PSL v2.
+   You can use this software according to the terms and conditions of the Mulan PSL v2.
+   You may obtain a copy of Mulan PSL v2 at:
+            http://license.coscl.org.cn/MulanPSL2
+   THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+   EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+   MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+   See the Mulan PSL v2 for more details.
+*/
 package alipay_sdk
 
 import alipay_sdk.biz
@@ -66,7 +77,7 @@ public class Request <: Serializable<Request> & Requester & JsonHelper {
             .add(bindString("app_cert_sn", appCertSn))
             .add(bindString("alipay_root_cert_sn", alipayRootCertSn))
             .add(bindString("app_id", appID))
-            .add(bindOptionString("app_auth_token", appAuthToken))
+            .add(serOptionString("app_auth_token", appAuthToken))
             .add(bindString("method", method))
             .add(bindString("format", format))
             .add(bindString("charset", charset))
@@ -74,26 +85,26 @@ public class Request <: Serializable<Request> & Requester & JsonHelper {
             .add(bindString("sign", sign))
             .add(bindString("timestamp", timestamp))
             .add(bindString("version", version))
-            .add(bindOptionString("notify_url", notifyUrl))
-            .add(bindOptionString("return_url", returnUrl))
+            .add(serOptionString("notify_url", notifyUrl))
+            .add(serOptionString("return_url", returnUrl))
             .add(bindString("biz_content", bizContent))
     }
     public static func deserialize(dm: DataModel): Request {
         var res = Request()
-        res.appCertSn = stringGet("app_cert_sn", dm)
-        res.alipayRootCertSn = stringGet("alipay_root_cert_sn", dm)
-        res.appID = stringGet("app_id", dm)
-        res.appAuthToken = stringGet("app_auth_token", dm)
-        res.method = stringGet("method", dm)
-        res.format = stringGet("format", dm)
-        res.charset = stringGet("charset", dm)
-        res.signType = stringGet("sign_type", dm)
-        res.sign = stringGet("sign", dm)
-        res.timestamp = stringGet("timestamp", dm)
-        res.version = stringGet("version", dm)
-        res.notifyUrl = optionStringGet("notify_url", dm)
-        res.returnUrl = optionStringGet("return_url", dm)
-        res.bizContent = stringGet("biz_content", dm)
+        res.appCertSn = desString("app_cert_sn", dm)
+        res.alipayRootCertSn = desString("alipay_root_cert_sn", dm)
+        res.appID = desString("app_id", dm)
+        res.appAuthToken = desString("app_auth_token", dm)
+        res.method = desString("method", dm)
+        res.format = desString("format", dm)
+        res.charset = desString("charset", dm)
+        res.signType = desString("sign_type", dm)
+        res.sign = desString("sign", dm)
+        res.timestamp = desString("timestamp", dm)
+        res.version = desString("version", dm)
+        res.notifyUrl = desOptionString("notify_url", dm)
+        res.returnUrl = desOptionString("return_url", dm)
+        res.bizContent = desString("biz_content", dm)
         return res
     }
     public func getMethod(): String {

@@ -1,3 +1,14 @@
+/*
+   Copyright (c) 2024-present wander@rustpub.com
+   hotbuild is licensed under Mulan PSL v2.
+   You can use this software according to the terms and conditions of the Mulan PSL v2.
+   You may obtain a copy of Mulan PSL v2 at:
+            http://license.coscl.org.cn/MulanPSL2
+   THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+   EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+   MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+   See the Mulan PSL v2 for more details.
+*/
 package alipay_sdk.response
 
 import serialization.serialization.{Serializable, DataModel, DataModelStruct, field}
@@ -11,16 +22,16 @@ public class TradePageRefundResponse <: Serializable<TradePageRefundResponse> & 
 
     public func serialize(): DataModel {
         return DataModelStruct()
-            .add(bindOptionString("sign", sign))
-            .add(bindOptionString("alipay_cert_sn", alipayCertSn))
+            .add(serSetOptionString("sign", sign))
+            .add(serSetOptionString("alipay_cert_sn", alipayCertSn))
             .add(field<PageRefundResponse>("alipay_trade_page_refund_response", response))
     }
 
     public static func deserialize(dm: DataModel): TradePageRefundResponse {
         var res = TradePageRefundResponse()
         res.response = PageRefundResponse.deserialize(getDms(dm).get("alipay_trade_page_refund_response"))
-        res.sign = optionStringGet("sign", dm)
-        res.alipayCertSn = optionStringGet("alipay_cert_sn", dm)
+        res.sign = deGetOptionString("sign", dm)
+        res.alipayCertSn = deGetOptionString("alipay_cert_sn", dm)
         return res
     }
 }
@@ -37,26 +48,26 @@ class PageRefundResponse <: Serializable<PageRefundResponse> & JsonHelper {
 
     public func serialize(): DataModel {
         return DataModelStruct()
-            .add(bindOptionString("code", code))
-            .add(bindOptionString("msg", msg))
-            .add(bindOptionString("sub_code", subCode))
-            .add(bindOptionString("sub_msg", subMsg))
-            .add(bindOptionString("trade_no", tradeNo))
-            .add(bindOptionString("out_trade_no", outTradeNo))
-            .add(bindOptionString("out_request_no", outRequestNo))
-            .add(bindOptionString("refund_amount", refundAmount))
+            .add(serSetOptionString("code", code))
+            .add(serSetOptionString("msg", msg))
+            .add(serSetOptionString("sub_code", subCode))
+            .add(serSetOptionString("sub_msg", subMsg))
+            .add(serSetOptionString("trade_no", tradeNo))
+            .add(serSetOptionString("out_trade_no", outTradeNo))
+            .add(serSetOptionString("out_request_no", outRequestNo))
+            .add(serSetOptionString("refund_amount", refundAmount))
     }
 
     public static func deserialize(dm: DataModel): PageRefundResponse {
         var res = PageRefundResponse()
-        res.code = optionStringGet("code", dm)
-        res.msg = optionStringGet("msg", dm)
-        res.subCode = optionStringGet("sub_code", dm)
-        res.subMsg = optionStringGet("sub_msg", dm)
-        res.tradeNo = optionStringGet("trade_no", dm)
-        res.outTradeNo = optionStringGet("out_trade_no", dm)
-        res.outRequestNo = optionStringGet("out_request_no", dm)
-        res.refundAmount = optionStringGet("refund_amount", dm)
+        res.code = deGetOptionString("code", dm)
+        res.msg = deGetOptionString("msg", dm)
+        res.subCode = deGetOptionString("sub_code", dm)
+        res.subMsg = deGetOptionString("sub_msg", dm)
+        res.tradeNo = deGetOptionString("trade_no", dm)
+        res.outTradeNo = deGetOptionString("out_trade_no", dm)
+        res.outRequestNo = deGetOptionString("out_request_no", dm)
+        res.refundAmount = deGetOptionString("refund_amount", dm)
         return res
     }
 }

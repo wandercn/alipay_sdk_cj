@@ -1,3 +1,14 @@
+/*
+   Copyright (c) 2024-present wander@rustpub.com
+   hotbuild is licensed under Mulan PSL v2.
+   You can use this software according to the terms and conditions of the Mulan PSL v2.
+   You may obtain a copy of Mulan PSL v2 at:
+            http://license.coscl.org.cn/MulanPSL2
+   THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+   EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+   MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+   See the Mulan PSL v2 for more details.
+*/
 package alipay_sdk
 
 import std.time.{TimeZone, DateTime}
@@ -5,7 +16,7 @@ import std.collection.HashMap
 
 public func getNowBeijingTimeStr(): String {
     let timeFormat = "yyyy-MM-dd HH:mm:ss"
-    let loc = TimeZone("CST", 8 * Duration.hour)
+    let loc = TimeZone("CST",  Duration.hour *8)
     let nowTime = DateTime.now().inTimeZone(loc)
     return nowTime.toString(timeFormat)
 }

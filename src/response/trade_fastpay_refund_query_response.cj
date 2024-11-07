@@ -1,3 +1,14 @@
+/*
+   Copyright (c) 2024-present wander@rustpub.com
+   hotbuild is licensed under Mulan PSL v2.
+   You can use this software according to the terms and conditions of the Mulan PSL v2.
+   You may obtain a copy of Mulan PSL v2 at:
+            http://license.coscl.org.cn/MulanPSL2
+   THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+   EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+   MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+   See the Mulan PSL v2 for more details.
+*/
 package alipay_sdk.response
 
 import serialization.serialization.{Serializable, DataModel, DataModelStruct, field}
@@ -11,16 +22,16 @@ public class TradeFastpayRefundQueryResponse <: Serializable<TradeFastpayRefundQ
 
     public func serialize(): DataModel {
         return DataModelStruct()
-            .add(bindOptionString("sign", sign))
-            .add(bindOptionString("alipay_cert_sn", alipayCertSn))
+            .add(serSetOptionString("sign", sign))
+            .add(serSetOptionString("alipay_cert_sn", alipayCertSn))
             .add(field<RefundQueryResponse>("alipay_trade_fastpay_refund_query_response", response))
     }
 
     public static func deserialize(dm: DataModel): TradeFastpayRefundQueryResponse {
         var res = TradeFastpayRefundQueryResponse()
         res.response = RefundQueryResponse.deserialize(getDms(dm).get("alipay_trade_fastpay_refund_query_response"))
-        res.sign = optionStringGet("sign", dm)
-        res.alipayCertSn = optionStringGet("alipay_cert_sn", dm)
+        res.sign = deGetOptionString("sign", dm)
+        res.alipayCertSn = deGetOptionString("alipay_cert_sn", dm)
         return res
     }
 }
@@ -47,46 +58,46 @@ class RefundQueryResponse <: Serializable<RefundQueryResponse> & JsonHelper {
 
     public func serialize(): DataModel {
         return DataModelStruct()
-            .add(bindOptionString("code", code))
-            .add(bindOptionString("msg", msg))
-            .add(bindOptionString("sub_code", subCode))
-            .add(bindOptionString("sub_msg", subMsg))
-            .add(bindOptionString("trade_no", tradeNo))
-            .add(bindOptionString("out_trade_no", outTradeNo))
-            .add(bindOptionString("out_request_no", outRequestNo))
-            .add(bindOptionString("refund_reason", refundReason))
-            .add(bindOptionString("total_amount", totalAmount))
-            .add(bindOptionString("refund_amount", refundAmount))
+            .add(serSetOptionString("code", code))
+            .add(serSetOptionString("msg", msg))
+            .add(serSetOptionString("sub_code", subCode))
+            .add(serSetOptionString("sub_msg", subMsg))
+            .add(serSetOptionString("trade_no", tradeNo))
+            .add(serSetOptionString("out_trade_no", outTradeNo))
+            .add(serSetOptionString("out_request_no", outRequestNo))
+            .add(serSetOptionString("refund_reason", refundReason))
+            .add(serSetOptionString("total_amount", totalAmount))
+            .add(serSetOptionString("refund_amount", refundAmount))
             .add(field<?ArrayList<RefundRoyalty>>("refund_royaltys", refundRoyaltys))
-            .add(bindOptionString("gmt_refund_pay", gmtRefundPay))
+            .add(serSetOptionString("gmt_refund_pay", gmtRefundPay))
             .add(field<?ArrayList<TradeFundBill>>("refund_detail_item_list", refundDetailItemList))
-            .add(bindOptionString("send_back_fee", sendBackFee))
-            .add(bindOptionString("refund_settlement_id", refundSettlementId))
-            .add(bindOptionString("present_refund_buyer_amount", presentRefundBuyerAmount))
-            .add(bindOptionString("present_refund_discount_amount", presentRefundDiscountAmount))
-            .add(bindOptionString("present_refund_mdiscount_amount", presentRefundMdiscountAmount))
+            .add(serSetOptionString("send_back_fee", sendBackFee))
+            .add(serSetOptionString("refund_settlement_id", refundSettlementId))
+            .add(serSetOptionString("present_refund_buyer_amount", presentRefundBuyerAmount))
+            .add(serSetOptionString("present_refund_discount_amount", presentRefundDiscountAmount))
+            .add(serSetOptionString("present_refund_mdiscount_amount", presentRefundMdiscountAmount))
     }
 
     public static func deserialize(dm: DataModel): RefundQueryResponse {
         var res = RefundQueryResponse()
-        res.code = optionStringGet("code", dm)
-        res.msg = optionStringGet("msg", dm)
-        res.subCode = optionStringGet("sub_code", dm)
-        res.subMsg = optionStringGet("sub_msg", dm)
-        res.tradeNo = optionStringGet("trade_no", dm)
-        res.outTradeNo = optionStringGet("out_trade_no", dm)
-        res.outRequestNo = optionStringGet("out_request_no", dm)
-        res.refundReason = optionStringGet("refund_reason", dm)
-        res.totalAmount = optionStringGet("total_amount", dm)
-        res.refundAmount = optionStringGet("refund_amount", dm)
+        res.code = deGetOptionString("code", dm)
+        res.msg = deGetOptionString("msg", dm)
+        res.subCode = deGetOptionString("sub_code", dm)
+        res.subMsg = deGetOptionString("sub_msg", dm)
+        res.tradeNo = deGetOptionString("trade_no", dm)
+        res.outTradeNo = deGetOptionString("out_trade_no", dm)
+        res.outRequestNo = deGetOptionString("out_request_no", dm)
+        res.refundReason = deGetOptionString("refund_reason", dm)
+        res.totalAmount = deGetOptionString("total_amount", dm)
+        res.refundAmount = deGetOptionString("refund_amount", dm)
         res.refundRoyaltys = ArrayList<RefundRoyalty>.deserialize(getDms(dm).get("refund_royaltys"))
-        res.gmtRefundPay = optionStringGet("gmt_refund_pay", dm)
+        res.gmtRefundPay = deGetOptionString("gmt_refund_pay", dm)
         res.refundDetailItemList = ArrayList<TradeFundBill>.deserialize(getDms(dm).get("refund_detail_item_list"))
-        res.sendBackFee = optionStringGet("send_back_fee", dm)
-        res.refundSettlementId = optionStringGet("refund_settlement_id", dm)
-        res.presentRefundBuyerAmount = optionStringGet("present_refund_buyer_amount", dm)
-        res.presentRefundDiscountAmount = optionStringGet("present_refund_discount_amount", dm)
-        res.presentRefundMdiscountAmount = optionStringGet("present_refund_mdiscount_amount", dm)
+        res.sendBackFee = deGetOptionString("send_back_fee", dm)
+        res.refundSettlementId = deGetOptionString("refund_settlement_id", dm)
+        res.presentRefundBuyerAmount = deGetOptionString("present_refund_buyer_amount", dm)
+        res.presentRefundDiscountAmount = deGetOptionString("present_refund_discount_amount", dm)
+        res.presentRefundMdiscountAmount = deGetOptionString("present_refund_mdiscount_amount", dm)
         return res
     }
 }
@@ -102,24 +113,24 @@ class RefundRoyalty <: Serializable<RefundRoyalty> & JsonHelper {
 
     public func serialize(): DataModel {
         return DataModelStruct()
-            .add(bindOptionString("refund_amount", refundAmount))
-            .add(bindOptionString("royalty_type", royaltyType))
-            .add(bindOptionString("result_code", resultCode))
-            .add(bindOptionString("trans_out", transOut))
-            .add(bindOptionString("trans_out_email", transOutEmail))
-            .add(bindOptionString("trans_in", transIn))
-            .add(bindOptionString("trans_in_email", transInEmail))
+            .add(serSetOptionString("refund_amount", refundAmount))
+            .add(serSetOptionString("royalty_type", royaltyType))
+            .add(serSetOptionString("result_code", resultCode))
+            .add(serSetOptionString("trans_out", transOut))
+            .add(serSetOptionString("trans_out_email", transOutEmail))
+            .add(serSetOptionString("trans_in", transIn))
+            .add(serSetOptionString("trans_in_email", transInEmail))
     }
 
     public static func deserialize(dm: DataModel): RefundRoyalty {
         var res = RefundRoyalty()
-        res.refundAmount = optionStringGet("refund_amount", dm)
-        res.royaltyType = optionStringGet("royalty_type", dm)
-        res.resultCode = optionStringGet("result_code", dm)
-        res.transOut = optionStringGet("trans_out", dm)
-        res.transOutEmail = optionStringGet("trans_out_email", dm)
-        res.transIn = optionStringGet("trans_in", dm)
-        res.transInEmail = optionStringGet("trans_in_email", dm)
+        res.refundAmount = deGetOptionString("refund_amount", dm)
+        res.royaltyType = deGetOptionString("royalty_type", dm)
+        res.resultCode = deGetOptionString("result_code", dm)
+        res.transOut = deGetOptionString("trans_out", dm)
+        res.transOutEmail = deGetOptionString("trans_out_email", dm)
+        res.transIn = deGetOptionString("trans_in", dm)
+        res.transInEmail = deGetOptionString("trans_in_email", dm)
         return res
     }
 }

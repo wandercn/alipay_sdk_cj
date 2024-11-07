@@ -1,3 +1,14 @@
+/*
+   Copyright (c) 2024-present wander@rustpub.com
+   hotbuild is licensed under Mulan PSL v2.
+   You can use this software according to the terms and conditions of the Mulan PSL v2.
+   You may obtain a copy of Mulan PSL v2 at:
+            http://license.coscl.org.cn/MulanPSL2
+   THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+   EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+   MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+   See the Mulan PSL v2 for more details.
+*/
 package alipay_sdk.response
 
 import serialization.serialization.{Serializable, DataModel, DataModelStruct, field}
@@ -11,16 +22,16 @@ public class TradeRefundResponse <: Serializable<TradeRefundResponse> & JsonHelp
 
     public func serialize(): DataModel {
         return DataModelStruct()
-            .add(bindOptionString("sign", sign))
-            .add(bindOptionString("alipay_cert_sn", alipayCertSn))
+            .add(serSetOptionString("sign", sign))
+            .add(serSetOptionString("alipay_cert_sn", alipayCertSn))
             .add(field<RefundResponse>("alipay_trade_refund_response", response))
     }
 
     public static func deserialize(dm: DataModel): TradeRefundResponse {
         var res = TradeRefundResponse()
         res.response = RefundResponse.deserialize(getDms(dm).get("alipay_trade_refund_response"))
-        res.sign = optionStringGet("sign", dm)
-        res.alipayCertSn = optionStringGet("alipay_cert_sn", dm)
+        res.sign = deGetOptionString("sign", dm)
+        res.alipayCertSn = deGetOptionString("alipay_cert_sn", dm)
         return res
     }
 }
@@ -48,49 +59,49 @@ class RefundResponse <: Serializable<RefundResponse> & JsonHelper {
 
     public func serialize(): DataModel {
         return DataModelStruct()
-            .add(bindOptionString("code", code))
-            .add(bindOptionString("msg", msg))
-            .add(bindOptionString("sub_code", subCode))
-            .add(bindOptionString("sub_msg", subMsg))
-            .add(bindOptionString("trade_no", tradeNo))
-            .add(bindOptionString("out_trade_no", outTradeNo))
-            .add(bindOptionString("buyer_logon_id", buyerLogonId))
-            .add(bindOptionString("fund_change", fundChange))
-            .add(bindOptionString("refund_fee", refundFee))
-            .add(bindOptionString("refund_currency", refundCurrency))
-            .add(bindOptionString("gmt_refund_pay", gmtRefundPay))
+            .add(serSetOptionString("code", code))
+            .add(serSetOptionString("msg", msg))
+            .add(serSetOptionString("sub_code", subCode))
+            .add(serSetOptionString("sub_msg", subMsg))
+            .add(serSetOptionString("trade_no", tradeNo))
+            .add(serSetOptionString("out_trade_no", outTradeNo))
+            .add(serSetOptionString("buyer_logon_id", buyerLogonId))
+            .add(serSetOptionString("fund_change", fundChange))
+            .add(serSetOptionString("refund_fee", refundFee))
+            .add(serSetOptionString("refund_currency", refundCurrency))
+            .add(serSetOptionString("gmt_refund_pay", gmtRefundPay))
             .add(field<?ArrayList<TradeFundBill>>("refund_detail_item_list", refundDetailItemList))
-            .add(bindOptionString("store_name", storeName))
-            .add(bindOptionString("buyer_user_id", buyerUserId))
+            .add(serSetOptionString("store_name", storeName))
+            .add(serSetOptionString("buyer_user_id", buyerUserId))
             .add(field<?ArrayList<RefundPresetPaytool>>("refund_preset_paytool_list", refundPresetPaytoolList))
-            .add(bindOptionString("refund_settlement_id", refundSettlementId))
-            .add(bindOptionString("present_refund_buyer_amount", presentRefundBuyerAmount))
-            .add(bindOptionString("present_refund_discount_amount", presentRefundDiscountAmount))
-            .add(bindOptionString("present_refund_mdiscount_amount", presentRefundMdiscountAmount))
+            .add(serSetOptionString("refund_settlement_id", refundSettlementId))
+            .add(serSetOptionString("present_refund_buyer_amount", presentRefundBuyerAmount))
+            .add(serSetOptionString("present_refund_discount_amount", presentRefundDiscountAmount))
+            .add(serSetOptionString("present_refund_mdiscount_amount", presentRefundMdiscountAmount))
     }
 
     public static func deserialize(dm: DataModel): RefundResponse {
         var res = RefundResponse()
-        res.code = optionStringGet("code", dm)
-        res.msg = optionStringGet("msg", dm)
-        res.subCode = optionStringGet("sub_code", dm)
-        res.subMsg = optionStringGet("sub_msg", dm)
-        res.tradeNo = optionStringGet("trade_no", dm)
-        res.outTradeNo = optionStringGet("out_trade_no", dm)
-        res.buyerLogonId = optionStringGet("buyer_logon_id", dm)
-        res.fundChange = optionStringGet("fund_change", dm)
-        res.refundFee = optionStringGet("refund_fee", dm)
-        res.refundCurrency = optionStringGet("refund_currency", dm)
-        res.gmtRefundPay = optionStringGet("gmt_refund_pay", dm)
+        res.code = deGetOptionString("code", dm)
+        res.msg = deGetOptionString("msg", dm)
+        res.subCode = deGetOptionString("sub_code", dm)
+        res.subMsg = deGetOptionString("sub_msg", dm)
+        res.tradeNo = deGetOptionString("trade_no", dm)
+        res.outTradeNo = deGetOptionString("out_trade_no", dm)
+        res.buyerLogonId = deGetOptionString("buyer_logon_id", dm)
+        res.fundChange = deGetOptionString("fund_change", dm)
+        res.refundFee = deGetOptionString("refund_fee", dm)
+        res.refundCurrency = deGetOptionString("refund_currency", dm)
+        res.gmtRefundPay = deGetOptionString("gmt_refund_pay", dm)
         res.refundDetailItemList = ArrayList<TradeFundBill>.deserialize(getDms(dm).get("refund_detail_item_list"))
-        res.storeName = optionStringGet("store_name", dm)
-        res.buyerUserId = optionStringGet("buyer_user_id", dm)
+        res.storeName = deGetOptionString("store_name", dm)
+        res.buyerUserId = deGetOptionString("buyer_user_id", dm)
         res.refundPresetPaytoolList = ArrayList<RefundPresetPaytool>.deserialize(
             getDms(dm).get("refund_preset_paytool_list"))
-        res.refundSettlementId = optionStringGet("refund_settlement_id", dm)
-        res.presentRefundBuyerAmount = optionStringGet("present_refund_buyer_amount", dm)
-        res.presentRefundDiscountAmount = optionStringGet("present_refund_discount_amount", dm)
-        res.presentRefundMdiscountAmount = optionStringGet("present_refund_mdiscount_amount", dm)
+        res.refundSettlementId = deGetOptionString("refund_settlement_id", dm)
+        res.presentRefundBuyerAmount = deGetOptionString("present_refund_buyer_amount", dm)
+        res.presentRefundDiscountAmount = deGetOptionString("present_refund_discount_amount", dm)
+        res.presentRefundMdiscountAmount = deGetOptionString("present_refund_mdiscount_amount", dm)
         return res
     }
 }
@@ -104,20 +115,20 @@ class TradeFundBill <: Serializable<TradeFundBill> & JsonHelper {
 
     public func serialize(): DataModel {
         return DataModelStruct()
-            .add(bindOptionString("fund_channel", fundChannel))
-            .add(bindOptionString("bank_code", bankCode))
-            .add(bindOptionString("amount", amount))
-            .add(bindOptionString("real_amount", realAmount))
-            .add(bindOptionString("fund_type", fundType))
+            .add(serSetOptionString("fund_channel", fundChannel))
+            .add(serSetOptionString("bank_code", bankCode))
+            .add(serSetOptionString("amount", amount))
+            .add(serSetOptionString("real_amount", realAmount))
+            .add(serSetOptionString("fund_type", fundType))
     }
 
     public static func deserialize(dm: DataModel): TradeFundBill {
         var res = TradeFundBill()
-        res.fundChannel = optionStringGet("fund_channel", dm)
-        res.bankCode = optionStringGet("bank_code", dm)
-        res.amount = optionStringGet("amount", dm)
-        res.realAmount = optionStringGet("real_amount", dm)
-        res.fundType = optionStringGet("fund_type", dm)
+        res.fundChannel = deGetOptionString("fund_channel", dm)
+        res.bankCode = deGetOptionString("bank_code", dm)
+        res.amount = deGetOptionString("amount", dm)
+        res.realAmount = deGetOptionString("real_amount", dm)
+        res.fundType = deGetOptionString("fund_type", dm)
         return res
     }
 }
@@ -129,13 +140,13 @@ class RefundPresetPaytool <: Serializable<RefundPresetPaytool> & JsonHelper {
     public func serialize(): DataModel {
         return DataModelStruct()
             .add(field<?ArrayList<String>>("amount", amount))
-            .add(bindOptionString("assert_type_code", assertTypeCode))
+            .add(serSetOptionString("assert_type_code", assertTypeCode))
     }
 
     public static func deserialize(dm: DataModel): RefundPresetPaytool {
         var res = RefundPresetPaytool()
         res.amount = ArrayList<String>.deserialize(getDms(dm).get("amount"))
-        res.assertTypeCode = optionStringGet("assert_type_code", dm)
+        res.assertTypeCode = deGetOptionString("assert_type_code", dm)
         return res
     }
 }
