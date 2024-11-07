@@ -75,3 +75,7 @@ func newPayClient(): Payer {
 {"sign":"gXCzk12LlpSmddZkODd5pudECfGcOYKmxFbfl3PpZhQrQd/10Y5HvtZU0LwqsDUr3FkDHXWptpV5AygH1nxxcABQXtpR6Gl2KE1J+Y9gQBwak+/5p0XmpRV9IsLxKCipvZwr+yk8gV6WU1c4aeaFG6C0IHdgLIoeDHJmc2xUNirsvNDI9ctvrQQ/t7aaER2ehvsvyfQW7+rydbdtfWzt8h5JhfowfANWA3imw7h1vfdJL1meAf5fentFaZ04TDx0C7gE9mycnU2QzZAO/Ag1Wt3FVN74w4HZiJ9vxm9Hw1ebym3EZcnHpCnS+H1WsKGKPhwjiGNQS9MntuaHnGdSUw==","alipay_cert_sn":"71d5f5ab5fa06fcad86b56c0c5888217","alipay_trade_create_response":{"code":"10000","msg":"Success","sub_code":null,"sub_msg":null,"trade_no":"2024102922001497370504000146","out_trade_no":"1730196119255256000"}}
 
 ```
+
+# 参考项目
+
+https://github.com/wandercn/alipay_sdk_rust
