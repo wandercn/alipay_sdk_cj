@@ -1,0 +1,4 @@
+version = 0
+
+[requires]
+  alipay_sdk = {branch = "master", commitId = "1a9ad9ad6faf7358f25a4db2203a0ccd5d400498", git = "https://github.com/wandercn/alipay_sdk_cj.git"}

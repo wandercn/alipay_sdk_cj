@@ -1,0 +1,14 @@
+[dependencies]
+ alipay_sdk  = {git = "https://github.com/wandercn/alipay_sdk_cj.git" ,branch = "master"}
+[package]
+  cjc-version = "0.56.4"
+  compile-option = ""
+  description = "nothing here"
+  link-option = ""
+  name = "example"
+  output-type = "executable"
+  override-compile-option = ""
+  src-dir = ""
+  target-dir = ""
+  version = "1.0.0"
+  package-configuration = {}
