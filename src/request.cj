@@ -8,7 +8,7 @@
    EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
    MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
    See the Mulan PSL v2 for more details.
-*/
+ */
 package alipay_sdk
 
 import alipay_sdk.biz
@@ -16,6 +16,7 @@ import alipay_sdk.jsonhelper.JsonHelper
 import serialization.serialization.{Serializable, DataModelStruct, DataModel, field, Field}
 import std.collection.{ArrayList, HashMap}
 import std.sort.stableSort
+import encoding.url.Form
 
 public interface Requester {
     func setMethod(s: String): Requester
@@ -128,23 +129,17 @@ public class Request <: Serializable<Request> & Requester & JsonHelper {
     public func encodePayload(): String {
         var signer = newSigner(this.signType)
         signer.setPrivateKey(this.privateKey)
-        var sortStrSource = this.getSortedSignSource()
+        let sortedSource = this.getSortedSource()
         // println("带签名字符串: ${sortStrSource}")
-        let signture = signer.sign(sortStrSource)
+        let signture = signer.sign(sortedSource)
         // println("签名：${signture}")
-
-        var encodeList = ArrayList<String>()
-        for (one in sortStrSource.split("&")) {
-            var splites = one.split("=")
-            splites[1] = queryEscape(splites[1])
-            encodeList.append(String.join(splites, delimiter: "="))
-        }
-
-        var encodeQuery = String.join(encodeList.toArray(), delimiter: "&") + "&sign=" + queryEscape(signture)
-        // println("编码数据：${encodeQuery}")
-        return encodeQuery
+        // application/x-www-form-urlencoded格式请求数据
+        var form = Form(sortedSource)
+        form.set("sign", signture)
+        return form.toEncodeString()
     }
-    public func getSortedSignSource(): String {
+
+    public func getSortedSource(): String {
         var jsonObj = this.serialize()
         let m = HashMap<String, Option<String>>.deserialize(jsonObj)
         var queryList = ArrayList<String>()
@@ -156,9 +151,9 @@ public class Request <: Serializable<Request> & Requester & JsonHelper {
                 }
             }
         }
-        var arr = queryList.toArray()
-        stableSort(arr)
+        var kvs = queryList.toArray()
+        stableSort(kvs)
 
-        return String.join(arr, delimiter: "&")
+        return String.join(kvs, delimiter: "&")
     }
 }
