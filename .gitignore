@@ -5,3 +5,5 @@
 /.vscode
 cjlintignore.cfg
 report.json
+.DS_Store
+target
