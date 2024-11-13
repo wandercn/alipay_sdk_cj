@@ -209,9 +209,9 @@ public class PayClient <: Payer {
         var request = Request(this).setBizContent(bizContent).setMethod(bizContent.method())
         let encodeQuery = request.encodePayload()
         var parameters = HashMap<String, String>()
-        let kvPairs = encodeQuery.split("&")
+        let kvPairs = encodeQuery.split("&", removeEmpty: true)
         for (kv in kvPairs) {
-            let splits = kv.split("=")
+            let splits = kv.split("=", removeEmpty: true)
             let k = splits[0]
             let v = splits[1]
             parameters[k] = v
@@ -338,6 +338,17 @@ public class PayClient <: Payer {
         let dm = DataModel.fromJson(jsonV)
         var res = TradeCloseResponse.deserialize(dm)
         return res
+    }
+    /**
+     * 异步验签
+     * 支付宝异步回调信息，用支付宝公钥验证签名，确认消息是支付宝服务器发出的
+     * rawbody 是callback 异步通知 body
+     */
+    public func asyncVerifySign(rawbody: Array<Byte>): Bool {
+        let (source, sign, signType) = getAsyncCallBackMsgSource(rawbody)
+        var signer = newSigner(signType)
+        signer.setPublicKey(this.getAlipayPublicKey())
+        return signer.verify(source, sign)
     }
 }
 
