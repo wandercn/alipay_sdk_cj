@@ -82,7 +82,7 @@ public interface SerializeBinder {
         return field<Option<Int>>(key, value)
     }
 
-        static func serSetFloat64(key: String, value: Float64) {
+    static func serSetFloat64(key: String, value: Float64) {
         return field<Float64>(key, value)
     }
 
