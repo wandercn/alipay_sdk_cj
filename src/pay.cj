@@ -62,7 +62,7 @@ public interface Payer {
     func tradePageRefund(biz: TradePageRefundBiz): TradePageRefundResponse
     func tradeFastpayRefundQuery(biz: TradeFastpayRefundQueryBiz): TradeFastpayRefundQueryResponse
     func tradeClose(biz: TradeCloseBiz): TradeCloseResponse
-    // func asyncVerifySign(rawbody: Array<Byte>):Bool
+    func asyncVerifySign(rawbody: Array<Byte>): Bool
 }
 
 public class PayClient <: Payer {
