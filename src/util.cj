@@ -8,15 +8,17 @@
    EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
    MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
    See the Mulan PSL v2 for more details.
-*/
+ */
 package alipay_sdk
 
 import std.time.{TimeZone, DateTime}
-import std.collection.HashMap
+import std.collection.{HashMap, ArrayList}
+import encoding.url.{Form, URL}
+import std.sort.SortExtension
 
 public func getNowBeijingTimeStr(): String {
     let timeFormat = "yyyy-MM-dd HH:mm:ss"
-    let loc = TimeZone("CST",  Duration.hour *8)
+    let loc = TimeZone("CST", Duration.hour * 8)
     let nowTime = DateTime.now().inTimeZone(loc)
     return nowTime.toString(timeFormat)
 }
@@ -75,4 +77,46 @@ func queryEscape(input: String) {
     encoded = encoded.replace('@', '%40')
     encoded = encoded.replace('+', '%2B')
     return encoded
+}
+
+/**
+ * 获取支付宝CallBack异步消息的待签名字符串和签名
+ * 自行实现签名文档 https://opendocs.alipay.com/common/02mse7?pathHash=096e611e
+ * 返回值 source - 签名字符串 , sign - 签名 , signType - 签名类型
+ */
+func getAsyncCallBackMsgSource(rawbody: Array<Byte>): (source: String, sign: String, signType: String) {
+    let query = String.fromUtf8(rawbody)
+    var keys = ArrayList<String>()
+    var kvs = HashMap<String, String>()
+
+    for (one in query.split("&", removeEmpty: true)) {
+        let splits = one.split("=", removeEmpty: true)
+        let k = splits[0]
+        let v = splits[1]
+        kvs.put(k, v)
+        keys.append(k)
+    }
+    // 按字典排序
+    keys.sort(stable: true)
+
+    var form = Form()
+    for ((k, v) in kvs) {
+        form.set(k, v)
+    }
+
+    let signType = match (form.get("sign_type")) {
+        case Some(v) => v
+        case None => throw Exception("callback msg 's sign_type is None ")
+    }
+    let sign = match (form.get("sign")) {
+        case Some(v) => v
+        case None => throw Exception("callback msg 's sign is None ")
+    }
+    // 待签名字符串不包括sign和sign_type,需要删除
+    form.remove("sign")
+    form.remove("sign_type")
+    // 拼接成待签名字符串
+    let source = form.toEncodeString()
+
+    return (source, sign, signType)
 }
