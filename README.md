@@ -37,7 +37,7 @@ AliPay Sdk for 仓颉
 
 ### 注意事项说明：
 
-master分支： 目前适配 Dev Channel 0.56.4
+main分支： 目前适配 Dev Channel 0.56.4
 
 beta_0.53.13分支：目前适配 Beta Channel 0.53.13
 
