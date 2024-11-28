@@ -98,7 +98,6 @@ func getAsyncCallBackMsgSource(rawbody: Array<Byte>): (source: String, sign: Str
     }
     // 按字典排序
     keys.sort(stable: true)
-
     var form = Form()
     for ((k, v) in kvs) {
         form.set(k, v)
