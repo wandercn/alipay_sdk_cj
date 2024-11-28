@@ -68,14 +68,14 @@ Beta Channel 0.53.13
 
 ```
 [dependencies]
- CJson = {git = "https://gitcode.com/Cangjie-SIG/alipay_sdk_cj", branch = "beta_0.53.13"}
+alipay_sdk  = {git = "https://gitcode.com/Cangjie-SIG/alipay_sdk_cj", branch = "beta_0.53.13"}
 ```
 
 Dev Channel 0.56.4
 
 ```
 [dependencies]
- CJson = {git = "https://gitcode.com/Cangjie-SIG/alipay_sdk_cj", branch = "main"}
+ alipay_sdk = {git = "https://gitcode.com/Cangjie-SIG/alipay_sdk_cj", branch = "main"}
 ```
 
 ## Example
