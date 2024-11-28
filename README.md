@@ -1,11 +1,39 @@
-# alipay_sdk_cj
+<div align="center">
+<h1>alipay_sdk_cj</h1>
+</div>
+
+<p align="center">
+<img alt="" src="https://img.shields.io/badge/release-v1.0.0-brightgreen" style="display: inline-block;" />
+<img alt="" src="https://img.shields.io/badge/cjc-v0.56.4-brightgreen" style="display: inline-block;" />
+<!-- <img alt="" src="https://img.shields.io/badge/cjcov-0.0%25-brightgreen" style="display: inline-block;" />
+<img alt="" src="https://img.shields.io/badge/state-孵化/毕业-brightgreen" style="display: inline-block;" />
+<img alt="" src="https://img.shields.io/badge/domain-HOS/Cloud-brightgreen" style="display: inline-block;" /> -->
+</p>
+
+## 介绍
 
 AliPay Sdk for 仓颉
 
-
- Alipay sdk in cangjie 支付宝支付SDK。只支持最安全的RSA2，公钥证书方式签名验证方式,默认只支持utf-8编码和JSON格式。目前只支持商户直接接入模式
+支付宝支付后端仓颉原生SDK。只支持最安全的RSA2，公钥证书方式签名验证方式,默认只支持utf-8编码和JSON格式。目前只支持商户直接接入模式
 
  RSA2密钥生成请参考<https://opendocs.alipay.com/common/02kipl> 中的公钥证书方式生成，使用CSR文件申请，密钥格式必须使用PKCS1(非java适用)
+
+### 项目特性
+
+- 支持手机网站支付相关接口
+
+- 支持电脑网站支付相关接口
+
+- 支持对请求数据签名和对支付宝返回数据同步验签
+
+- 支付支付宝异步回调信息异步验签 `asyncVerifySign`
+
+### 项目计划
+
+1. 2024.11.11 已经完成支付宝支付在微信公共号和电脑网页场景接口后端所有功能。
+2. 后续其他接口，有用户提需求再增加
+
+
 
 ### 注意事项说明：
 
@@ -13,7 +41,28 @@ master分支： 目前适配 Dev Channel 0.56.4
 
 beta_0.53.13分支：目前适配 Beta Channel 0.53.13
 
+### 源码目录
+
+```shell
+.
+├── LICENSE     #开源协议
+├── README.md   #整体介绍
+├── aipdocs     #cjdoc 生成api接口文档目录
+├── cjpm.toml
+├── config      #cjdoc 生成文档的配置文件
+├── example     #示例代码
+└── src         #源码目录
+    ├── biz     #支付宝每个接口对应请求参数类
+    ├── jsonhelper # json序列化和反序列化使用到的帮助函数接口
+    ├── pay.cj     # 支付接口
+    ├── request.cj # 请求参数组合
+    ├── response   # 每个接口返回结构字段
+    ├── sign.cj    # 签名，验签
+    └── util.cj    # 其他模块用到的函数
+```
+
 ## Example
+
  ## apidoc
  <https://opendocs.alipay.com/apis/api_1/alipay.trade.create>
 
@@ -92,4 +141,12 @@ https://github.com/wandercn/alipay_sdk_rust
  cd alipay_sdk_cj
  cjdoc config
 ```
-api文档就生成在apidocs目录下是html文件，浏览器打开index.html就可以看到
+api文档就生成在apidocs/docs目录下是html文件，浏览器打开index.html就可以看到
+```
+
+## 开源协议
+木兰宽松许可证， 第2版 License
+
+## 参与贡献
+
+欢迎给我们提交PR，欢迎给我们提交Issue，欢迎参与任何形式的贡献。
