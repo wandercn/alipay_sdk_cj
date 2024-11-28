@@ -60,6 +60,23 @@ beta_0.53.13分支：目前适配 Beta Channel 0.53.13
     ├── sign.cj    # 签名，验签
     └── util.cj    # 其他模块用到的函数
 ```
+## 如何使用
+
+在您代码仓的 cjpm.toml 文件中，需要新增加如下源码依赖：
+
+Beta Channel 0.53.13
+
+```
+[dependencies]
+ CJson = {git = "https://gitcode.com/Cangjie-SIG/alipay_sdk_cj", branch = "beta_0.53.13"}
+```
+
+Dev Channel 0.56.4
+
+```
+[dependencies]
+ CJson = {git = "https://gitcode.com/Cangjie-SIG/alipay_sdk_cj", branch = "main"}
+```
 
 ## Example
 
