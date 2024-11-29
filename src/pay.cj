@@ -70,15 +70,15 @@ public class PayClient <: Payer {
     var PrivateKey: String = "" // rsa私钥单行文本字符串
     var PublicKey: String = "" // rsa公钥单行文本字符串
     var AlipayPublicKey: String = "" // 证书解析出的支付宝公钥
-    var AppCertSn: String = "" //`json:"app_cert_sn"`          // 应用公钥证书 SN
-    var AlipayRootCertSn: String = "" // `json:"alipay_root_cert_sn"`  // 支付宝根证书 SN
-    var AppID: String = "" // `json:"app_id"`               // 是	32	支付宝分配给开发者的应用ID	2014072300007148
-    var Format: String = "" // `json:"format,omitempty"`     // 否	40	仅支持JSON	JSON
-    var Charset: String = "" // `json:"charset"`              // 是	10	请求使用的编码格式，如utf-8,gbk,gb2312等	utf-8
-    var SignType: String = "" //`json:"sign_type"`            // 是	10	商户生成签名字符串所使用的签名算法类型，目前支持RSA2和RSA，推荐使用RSA2	RSA2
-    var Version: String = "" // `json:"version"`              // 是	3	调用的接口版本，固定为：1.0	1.0
-    var ReturnUrl: String = "" //`json:"return_url,omitempty"` // 否 前台回跳地址 return_url 自动跳转回商户页面
-    var NotifyUrl: String = "" //`json:"notify_url,omitempty"` // 支付宝服务器主动通知callback商户服务器里指定的页面http/https路径。
+    var AppCertSn: String = "" //app_cert_sn         // 应用公钥证书 SN
+    var AlipayRootCertSn: String = "" // alipay_root_cert_sn  // 支付宝根证书 SN
+    var AppID: String = "" // app_id               // 是	32	支付宝分配给开发者的应用ID	2014072300007148
+    var Format: String = "" // format  // 否	40	仅支持JSON	JSON
+    var Charset: String = "" // charset            // 是	10	请求使用的编码格式，如utf-8,gbk,gb2312等	utf-8
+    var SignType: String = "" //sign_type            // 是	10	商户生成签名字符串所使用的签名算法类型，目前支持RSA2和RSA，推荐使用RSA2	RSA2
+    var Version: String = "" // version              // 是	3	调用的接口版本，固定为：1.0	1.0
+    var ReturnUrl: String = "" //return_url,omitempty // 否 前台回跳地址 return_url 自动跳转回商户页面
+    var NotifyUrl: String = "" //notify_url,omitempty // 支付宝服务器主动通知callback商户服务器里指定的页面http/https路径。
 
     public func builder(): PayClientBuilder {
         return PayClientBuilder()
