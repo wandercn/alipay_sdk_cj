@@ -165,7 +165,7 @@ func newPayClient(): Payer {
 
 ## 异步签名回调接口的参考实现
 
-```
+```cangjie
 import std.time.DateTime
 import alipay_sdk.{PayClientBuilder, Payer}
 import alipay_sdk.biz
