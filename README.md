@@ -28,6 +28,21 @@ AliPay Sdk for 仓颉
 
 - 支付支付宝异步回调信息异步验签 `asyncVerifySign`
 
+### 支持接口列表
+
+- [x] alipay.trade.create(统一收单交易创建接口)
+- [x] alipay.trade.pay(统一收单交易支付接口)
+- [x] alipay.trade.query(统一收单线下交易查询)
+- [x] alipay.trade.app.pay(app支付接口2.0)后端只生成form数据给前端调用
+- [x] alipay.trade.wap.pay(手机网站支付接口2.0)后端只生成form数据给前端调用
+- [x] alipay.trade.page.pay(统一收单下单并支付页面接口)后端只生成form数据给PC前端调用
+- [x] alipay.trade.cancel(统一收单交易撤销接口)
+- [x] alipay.trade.refund(统一收单交易退款接口)
+- [x] alipay.trade.page.refund(统一收单退款页面接口)
+- [x] alipay.trade.fastpay.refund.query(统一收单交易退款查询)
+- [x] alipay.trade.close(统一收单交易关闭接口)
+- [x] asyncVerifySign(异步验签)
+
 ### 项目计划
 
 1. 2024.11.11 已经完成支付宝支付在微信公共号和电脑网页场景接口后端所有功能。
