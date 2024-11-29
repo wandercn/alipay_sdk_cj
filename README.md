@@ -159,7 +159,6 @@ https://github.com/wandercn/alipay_sdk_rust
  cjdoc config
 ```
 api文档就生成在apidocs/docs目录下是html文件，浏览器打开index.html就可以看到
-```
 
 ## 开源协议
 木兰宽松许可证， 第2版 License
