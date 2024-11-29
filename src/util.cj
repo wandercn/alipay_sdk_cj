@@ -11,7 +11,7 @@
  */
 package alipay_sdk
 
-import std.time.{TimeZone, DateTime}
+import std.time.{TimeZone, DateTime,Duration}
 import std.collection.{HashMap, ArrayList}
 import encoding.url.{Form, URL}
 import std.sort.SortExtension

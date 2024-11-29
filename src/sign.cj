@@ -12,7 +12,7 @@
 package alipay_sdk
 
 import crypto.keys.{RSAPrivateKey, RSAPublicKey, PadOption}
-import std.io.{ByteBuffer, StringWriter, readString}
+import std.io.{ByteArrayStream, StringWriter}
 import crypto.digest.SHA256
 import std.crypto.digest.digest
 import encoding.base64
@@ -105,7 +105,7 @@ func formatPublicKey(raw: String): String {
 }
 
 func formatKey(raw: String, prefix: String, suffix: String, lineCount: Int): String {
-    var byteBuffer = ByteBuffer()
+    var byteBuffer = ByteArrayStream()
     let buffer = StringWriter(byteBuffer)
     buffer.write(prefix)
     buffer.write("\n")
@@ -131,5 +131,5 @@ func formatKey(raw: String, prefix: String, suffix: String, lineCount: Int): Str
     buffer.write(suffix)
     buffer.write("\n")
     buffer.flush()
-    return readString(byteBuffer)
+    return String.fromUtf8(byteBuffer.readToEnd())
 }

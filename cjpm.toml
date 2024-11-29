@@ -2,7 +2,7 @@
 
 [package]
   vendor = "wander@rustpub.com"
-  cjc-version = "0.57.3"
+  cjc-version = "0.53.13"
   compile-option = "-Woff unused"
   description = "AliPay Sdk for 仓颉"
   link-option = ""

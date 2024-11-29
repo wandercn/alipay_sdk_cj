@@ -151,7 +151,7 @@ public class PayClient <: Payer {
         var rsp = httpclient.send(request)
         httpclient.close()
         if (let Some(length) <- rsp.bodySize) {
-            var body = Array<Byte>(length, repeat: 0)
+            var body = Array<Byte>(length, item: 0)
             rsp.body.read(body)
 
             return body

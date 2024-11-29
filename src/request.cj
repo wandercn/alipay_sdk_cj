@@ -146,7 +146,7 @@ public class Request <: Serializable<Request> & Requester & JsonHelper {
         for ((k, v) in m) {
             if (let Some(v2) <- v) {
                 if (!v2.isEmpty() && k != "sign") {
-                    let query = k + "=" + v2.trimStart(" ").trimEnd(" ")
+                    let query = k + "=" + v2.trimLeft(" ").trimRight(" ")
                     queryList.append(query)
                 }
             }
