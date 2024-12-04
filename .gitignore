@@ -8,3 +8,4 @@ report.json
 .DS_Store
 target
 src/example/cjpm.lock
+example/cjpm.lock
