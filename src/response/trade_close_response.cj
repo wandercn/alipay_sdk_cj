@@ -36,7 +36,7 @@ public class TradeCloseResponse <: Serializable<TradeCloseResponse> & JsonHelper
     }
 }
 
-class CloseResponse <: Serializable<CloseResponse> & JsonHelper {
+public class CloseResponse <: Serializable<CloseResponse> & JsonHelper {
     public var code: ?String = None // code
     public var msg: ?String = None // msg
     public var subCode: ?String = None // sub_code
