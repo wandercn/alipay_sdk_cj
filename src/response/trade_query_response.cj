@@ -16,9 +16,9 @@ import std.collection.ArrayList
 import alipay_sdk.jsonhelper.JsonHelper
 
 public class TradeQueryResponse <: Serializable<TradeQueryResponse> & JsonHelper {
-    var response: QueryResponse = QueryResponse() // alipay_trade_query_response
-    var sign: String = "" // sign
-    var alipayCertSn: ?String = None // alipay_cert_sn
+    public var response: QueryResponse = QueryResponse() // alipay_trade_query_response
+    public var sign: String = "" // sign
+    public var alipayCertSn: ?String = None // alipay_cert_sn
 
     public func serialize(): DataModel {
         return DataModelStruct()
@@ -36,46 +36,46 @@ public class TradeQueryResponse <: Serializable<TradeQueryResponse> & JsonHelper
     }
 }
 
-class QueryResponse <: Serializable<QueryResponse> & JsonHelper {
-    var code: ?String = None // code
-    var msg: ?String = None // msg
-    var subCode: ?String = None // sub_code
-    var subMsg: ?String = None // sub_msg
-    var tradeNo: ?String = None // trade_no
-    var outTradeNo: ?String = None // out_trade_no
-    var buyerLogonId: ?String = None // buyer_logon_id
-    var tradeStatus: ?String = None // trade_status
-    var totalAmount: ?String = None // total_amount
-    var transCurrency: ?String = None // trans_currency
-    var settleCurrency: ?String = None // settle_currency
-    var settleAmount: ?String = None // settle_amount
-    var payCurrency: ?String = None // pay_currency
-    var payAmount: ?String = None // pay_amount
-    var settleTransRate: ?String = None // settle_trans_rate
-    var transPayRate: ?String = None // trans_pay_rate
-    var buyerPayAmount: ?String = None // buyer_pay_amount
-    var pointAmount: ?String = None // point_amount
-    var invoiceAmount: ?String = None // invoice_amount
-    var sendPayDate: ?String = None // send_pay_date
-    var receiptAmount: ?String = None // receipt_amount
-    var storeId: ?String = None // store_id
-    var terminalId: ?String = None // terminal_id
-    var fundBillList: ?ArrayList<FundBill> = None // fund_bill_list
-    var storeName: ?String = None // store_name
-    var buyerUserId: ?String = None // buyer_user_id
-    var chargeAmount: ?String = None // charge_amount
-    var chargeFlags: ?String = None // charge_flags
-    var settlementId: ?String = None // settlement_id
-    var tradeSettleInfo: ?TradeSettleInfo = None // trade_settle_info
-    var authTradePayMode: ?String = None // auth_trade_pay_mode
-    var buyerUserType: ?String = None // buyer_user_type
-    var mdiscountAmount: ?String = None // mdiscount_amount
-    var discountAmount: ?String = None // discount_amount
-    var buyerUserName: ?String = None // buyer_user_name
-    var subject: ?String = None // subject
-    var body: ?String = None // body
-    var alipaySubMerchantId: ?String = None // alipay_sub_merchant_id
-    var extInfos: ?String = None // ext_infos
+public class QueryResponse <: Serializable<QueryResponse> & JsonHelper {
+    public var code: ?String = None // code
+    public var msg: ?String = None // msg
+    public var subCode: ?String = None // sub_code
+    public var subMsg: ?String = None // sub_msg
+    public var tradeNo: ?String = None // trade_no
+    public var outTradeNo: ?String = None // out_trade_no
+    public var buyerLogonId: ?String = None // buyer_logon_id
+    public var tradeStatus: ?String = None // trade_status
+    public var totalAmount: ?String = None // total_amount
+    public var transCurrency: ?String = None // trans_currency
+    public var settleCurrency: ?String = None // settle_currency
+    public var settleAmount: ?String = None // settle_amount
+    public var payCurrency: ?String = None // pay_currency
+    public var payAmount: ?String = None // pay_amount
+    public var settleTransRate: ?String = None // settle_trans_rate
+    public var transPayRate: ?String = None // trans_pay_rate
+    public var buyerPayAmount: ?String = None // buyer_pay_amount
+    public var pointAmount: ?String = None // point_amount
+    public var invoiceAmount: ?String = None // invoice_amount
+    public var sendPayDate: ?String = None // send_pay_date
+    public var receiptAmount: ?String = None // receipt_amount
+    public var storeId: ?String = None // store_id
+    public var terminalId: ?String = None // terminal_id
+    public var fundBillList: ?ArrayList<FundBill> = None // fund_bill_list
+    public var storeName: ?String = None // store_name
+    public var buyerUserId: ?String = None // buyer_user_id
+    public var chargeAmount: ?String = None // charge_amount
+    public var chargeFlags: ?String = None // charge_flags
+    public var settlementId: ?String = None // settlement_id
+    public var tradeSettleInfo: ?TradeSettleInfo = None // trade_settle_info
+    public var authTradePayMode: ?String = None // auth_trade_pay_mode
+    public var buyerUserType: ?String = None // buyer_user_type
+    public var mdiscountAmount: ?String = None // mdiscount_amount
+    public var discountAmount: ?String = None // discount_amount
+    public var buyerUserName: ?String = None // buyer_user_name
+    public var subject: ?String = None // subject
+    public var body: ?String = None // body
+    public var alipaySubMerchantId: ?String = None // alipay_sub_merchant_id
+    public var extInfos: ?String = None // ext_infos
 
     public func serialize(): DataModel {
         return DataModelStruct()
@@ -165,8 +165,8 @@ class QueryResponse <: Serializable<QueryResponse> & JsonHelper {
     }
 }
 
-class TradeSettleInfo <: Serializable<TradeSettleInfo> & JsonHelper {
-    var tradeSettleDetailList: ?ArrayList<TradeSettleDetail> = None // trade_settle_detail_list
+public class TradeSettleInfo <: Serializable<TradeSettleInfo> & JsonHelper {
+    public var tradeSettleDetailList: ?ArrayList<TradeSettleDetail> = None // trade_settle_detail_list
 
     public func serialize(): DataModel {
         return DataModelStruct().add(
@@ -180,13 +180,13 @@ class TradeSettleInfo <: Serializable<TradeSettleInfo> & JsonHelper {
     }
 }
 
-class TradeSettleDetail <: Serializable<TradeSettleDetail> & JsonHelper {
-    var operationType: ?String = None // operation_type
-    var operationSerialNo: ?String = None // operation_serial_no
-    var operationDt: ?String = None // operation_dt
-    var transOut: ?String = None // trans_out
-    var transIn: ?String = None // trans_in
-    var amount: ?String = None // amount
+public class TradeSettleDetail <: Serializable<TradeSettleDetail> & JsonHelper {
+    public var operationType: ?String = None // operation_type
+    public var operationSerialNo: ?String = None // operation_serial_no
+    public var operationDt: ?String = None // operation_dt
+    public var transOut: ?String = None // trans_out
+    public var transIn: ?String = None // trans_in
+    public var amount: ?String = None // amount
 
     public func serialize(): DataModel {
         return DataModelStruct()

@@ -16,9 +16,9 @@ import std.collection.ArrayList
 import alipay_sdk.jsonhelper.JsonHelper
 
 public class TradeRefundResponse <: Serializable<TradeRefundResponse> & JsonHelper {
-    var response: RefundResponse = RefundResponse() // alipay_trade_refund_response
-    var sign: ?String = None // sign
-    var alipayCertSn: ?String = None // alipay_cert_sn
+    public var response: RefundResponse = RefundResponse() // alipay_trade_refund_response
+    public var sign: ?String = None // sign
+    public var alipayCertSn: ?String = None // alipay_cert_sn
 
     public func serialize(): DataModel {
         return DataModelStruct()
@@ -36,26 +36,26 @@ public class TradeRefundResponse <: Serializable<TradeRefundResponse> & JsonHelp
     }
 }
 
-class RefundResponse <: Serializable<RefundResponse> & JsonHelper {
-    var code: ?String = None // code
-    var msg: ?String = None // msg
-    var subCode: ?String = None // sub_code
-    var subMsg: ?String = None // sub_msg
-    var tradeNo: ?String = None // trade_no
-    var outTradeNo: ?String = None // out_trade_no
-    var buyerLogonId: ?String = None // buyer_logon_id
-    var fundChange: ?String = None // fund_change
-    var refundFee: ?String = None // refund_fee
-    var refundCurrency: ?String = None // refund_currency
-    var gmtRefundPay: ?String = None // gmt_refund_pay
-    var refundDetailItemList: ?ArrayList<TradeFundBill> = None // refund_detail_item_list
-    var storeName: ?String = None // store_name
-    var buyerUserId: ?String = None // buyer_user_id
-    var refundPresetPaytoolList: ?ArrayList<RefundPresetPaytool> = None // refund_preset_paytool_list
-    var refundSettlementId: ?String = None // refund_settlement_id
-    var presentRefundBuyerAmount: ?String = None // present_refund_buyer_amount
-    var presentRefundDiscountAmount: ?String = None // present_refund_discount_amount
-    var presentRefundMdiscountAmount: ?String = None // present_refund_mdiscount_amount
+public class RefundResponse <: Serializable<RefundResponse> & JsonHelper {
+    public var code: ?String = None // code
+    public var msg: ?String = None // msg
+    public var subCode: ?String = None // sub_code
+    public var subMsg: ?String = None // sub_msg
+    public var tradeNo: ?String = None // trade_no
+    public var outTradeNo: ?String = None // out_trade_no
+    public var buyerLogonId: ?String = None // buyer_logon_id
+    public var fundChange: ?String = None // fund_change
+    public var refundFee: ?String = None // refund_fee
+    public var refundCurrency: ?String = None // refund_currency
+    public var gmtRefundPay: ?String = None // gmt_refund_pay
+    public var refundDetailItemList: ?ArrayList<TradeFundBill> = None // refund_detail_item_list
+    public var storeName: ?String = None // store_name
+    public var buyerUserId: ?String = None // buyer_user_id
+    public var refundPresetPaytoolList: ?ArrayList<RefundPresetPaytool> = None // refund_preset_paytool_list
+    public var refundSettlementId: ?String = None // refund_settlement_id
+    public var presentRefundBuyerAmount: ?String = None // present_refund_buyer_amount
+    public var presentRefundDiscountAmount: ?String = None // present_refund_discount_amount
+    public var presentRefundMdiscountAmount: ?String = None // present_refund_mdiscount_amount
 
     public func serialize(): DataModel {
         return DataModelStruct()
@@ -106,12 +106,12 @@ class RefundResponse <: Serializable<RefundResponse> & JsonHelper {
     }
 }
 
-class TradeFundBill <: Serializable<TradeFundBill> & JsonHelper {
-    var fundChannel: ?String = None // fund_channel
-    var bankCode: ?String = None // bank_code
-    var amount: ?String = None // amount
-    var realAmount: ?String = None // real_amount
-    var fundType: ?String = None // fund_type
+public class TradeFundBill <: Serializable<TradeFundBill> & JsonHelper {
+    public var fundChannel: ?String = None // fund_channel
+    public var bankCode: ?String = None // bank_code
+    public var amount: ?String = None // amount
+    public var realAmount: ?String = None // real_amount
+    public var fundType: ?String = None // fund_type
 
     public func serialize(): DataModel {
         return DataModelStruct()
@@ -133,9 +133,9 @@ class TradeFundBill <: Serializable<TradeFundBill> & JsonHelper {
     }
 }
 
-class RefundPresetPaytool <: Serializable<RefundPresetPaytool> & JsonHelper {
-    var amount: ?ArrayList<String> = None // amount
-    var assertTypeCode: ?String = None // assert_type_code
+public class RefundPresetPaytool <: Serializable<RefundPresetPaytool> & JsonHelper {
+    public var amount: ?ArrayList<String> = None // amount
+    public var assertTypeCode: ?String = None // assert_type_code
 
     public func serialize(): DataModel {
         return DataModelStruct()

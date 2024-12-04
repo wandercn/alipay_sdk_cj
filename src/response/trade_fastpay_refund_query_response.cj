@@ -16,9 +16,9 @@ import std.collection.ArrayList
 import alipay_sdk.jsonhelper.JsonHelper
 
 public class TradeFastpayRefundQueryResponse <: Serializable<TradeFastpayRefundQueryResponse> & JsonHelper {
-    var response: RefundQueryResponse = RefundQueryResponse() // alipay_trade_fastpay_refund_query_response
-    var sign: ?String = None // sign
-    var alipayCertSn: ?String = None // alipay_cert_sn
+    public var response: RefundQueryResponse = RefundQueryResponse() // alipay_trade_fastpay_refund_query_response
+    public var sign: ?String = None // sign
+    public var alipayCertSn: ?String = None // alipay_cert_sn
 
     public func serialize(): DataModel {
         return DataModelStruct()
@@ -36,25 +36,25 @@ public class TradeFastpayRefundQueryResponse <: Serializable<TradeFastpayRefundQ
     }
 }
 
-class RefundQueryResponse <: Serializable<RefundQueryResponse> & JsonHelper {
-    var code: ?String = None // code
-    var msg: ?String = None // msg
-    var subCode: ?String = None // sub_code
-    var subMsg: ?String = None // sub_msg
-    var tradeNo: ?String = None // trade_no
-    var outTradeNo: ?String = None // out_trade_no
-    var outRequestNo: ?String = None // out_request_no
-    var refundReason: ?String = None // refund_reason
-    var totalAmount: ?String = None // total_amount
-    var refundAmount: ?String = None // refund_amount
-    var refundRoyaltys: ?ArrayList<RefundRoyalty> = None // refund_royaltys
-    var gmtRefundPay: ?String = None // gmt_refund_pay
-    var refundDetailItemList: ?ArrayList<TradeFundBill> = None // refund_detail_item_list
-    var sendBackFee: ?String = None // send_back_fee
-    var refundSettlementId: ?String = None // refund_settlement_id
-    var presentRefundBuyerAmount: ?String = None // present_refund_buyer_amount
-    var presentRefundDiscountAmount: ?String = None // present_refund_discount_amount
-    var presentRefundMdiscountAmount: ?String = None // present_refund_mdiscount_amount
+public class RefundQueryResponse <: Serializable<RefundQueryResponse> & JsonHelper {
+    public var code: ?String = None // code
+    public var msg: ?String = None // msg
+    public var subCode: ?String = None // sub_code
+    public var subMsg: ?String = None // sub_msg
+    public var tradeNo: ?String = None // trade_no
+    public var outTradeNo: ?String = None // out_trade_no
+    public var outRequestNo: ?String = None // out_request_no
+    public var refundReason: ?String = None // refund_reason
+    public var totalAmount: ?String = None // total_amount
+    public var refundAmount: ?String = None // refund_amount
+    public var refundRoyaltys: ?ArrayList<RefundRoyalty> = None // refund_royaltys
+    public var gmtRefundPay: ?String = None // gmt_refund_pay
+    public var refundDetailItemList: ?ArrayList<TradeFundBill> = None // refund_detail_item_list
+    public var sendBackFee: ?String = None // send_back_fee
+    public var refundSettlementId: ?String = None // refund_settlement_id
+    public var presentRefundBuyerAmount: ?String = None // present_refund_buyer_amount
+    public var presentRefundDiscountAmount: ?String = None // present_refund_discount_amount
+    public var presentRefundMdiscountAmount: ?String = None // present_refund_mdiscount_amount
 
     public func serialize(): DataModel {
         return DataModelStruct()
@@ -102,14 +102,14 @@ class RefundQueryResponse <: Serializable<RefundQueryResponse> & JsonHelper {
     }
 }
 
-class RefundRoyalty <: Serializable<RefundRoyalty> & JsonHelper {
-    var refundAmount: ?String = None // refund_amount
-    var royaltyType: ?String = None // royalty_type
-    var resultCode: ?String = None // result_code
-    var transOut: ?String = None // trans_out
-    var transOutEmail: ?String = None // trans_out_email
-    var transIn: ?String = None // trans_in
-    var transInEmail: ?String = None // trans_in_email
+public class RefundRoyalty <: Serializable<RefundRoyalty> & JsonHelper {
+    public var refundAmount: ?String = None // refund_amount
+    public var royaltyType: ?String = None // royalty_type
+    public var resultCode: ?String = None // result_code
+    public var transOut: ?String = None // trans_out
+    public var transOutEmail: ?String = None // trans_out_email
+    public var transIn: ?String = None // trans_in
+    public var transInEmail: ?String = None // trans_in_email
 
     public func serialize(): DataModel {
         return DataModelStruct()
