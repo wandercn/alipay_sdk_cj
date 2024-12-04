@@ -16,9 +16,9 @@ import std.collection.ArrayList
 import alipay_sdk.jsonhelper.JsonHelper
 
 public class TradeCancelResponse <: Serializable<TradeCancelResponse> & JsonHelper {
-    var response: CancelResponse = CancelResponse() // alipay_trade_cancel_response
-    var sign: ?String = None // sign
-    var alipayCertSn: ?String = None // alipay_cert_sn
+    public var response: CancelResponse = CancelResponse() // alipay_trade_cancel_response
+    public var sign: ?String = None // sign
+    public var alipayCertSn: ?String = None // alipay_cert_sn
 
     public func serialize(): DataModel {
         return DataModelStruct()
@@ -36,17 +36,17 @@ public class TradeCancelResponse <: Serializable<TradeCancelResponse> & JsonHelp
     }
 }
 
-class CancelResponse <: Serializable<CancelResponse> & JsonHelper {
-    var code: ?String = None // code
-    var msg: ?String = None // msg
-    var subCode: ?String = None // sub_code
-    var subMsg: ?String = None // sub_msg
-    var tradeNo: ?String = None // trade_no
-    var outTradeNo: ?String = None // out_trade_no
-    var retryFlag: ?String = None // retry_flag
-    var action: ?String = None // action
-    var gmtRefundPay: ?String = None // gmt_refund_pay
-    var refundSettlementId: ?String = None // refund_settlement_id
+public class CancelResponse <: Serializable<CancelResponse> & JsonHelper {
+    public var code: ?String = None // code
+    public var msg: ?String = None // msg
+    public var subCode: ?String = None // sub_code
+    public var subMsg: ?String = None // sub_msg
+    public var tradeNo: ?String = None // trade_no
+    public var outTradeNo: ?String = None // out_trade_no
+    public var retryFlag: ?String = None // retry_flag
+    public var action: ?String = None // action
+    public var gmtRefundPay: ?String = None // gmt_refund_pay
+    public var refundSettlementId: ?String = None // refund_settlement_id
 
     public func serialize(): DataModel {
         return DataModelStruct()

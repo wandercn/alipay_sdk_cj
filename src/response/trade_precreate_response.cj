@@ -16,9 +16,9 @@ import std.collection.ArrayList
 import alipay_sdk.jsonhelper.JsonHelper
 
 public class TradePrecreateResponse <: Serializable<TradePrecreateResponse> & JsonHelper {
-    var response: PrecreateResponse = PrecreateResponse() // alipay_trade_precreate_response
-    var sign: ?String = None // sign
-    var alipayCertSn: ?String = None // alipay_cert_sn
+    public var response: PrecreateResponse = PrecreateResponse() // alipay_trade_precreate_response
+    public var sign: ?String = None // sign
+    public var alipayCertSn: ?String = None // alipay_cert_sn
 
     public func serialize(): DataModel {
         return DataModelStruct()
@@ -36,13 +36,13 @@ public class TradePrecreateResponse <: Serializable<TradePrecreateResponse> & Js
     }
 }
 
-class PrecreateResponse <: Serializable<PrecreateResponse> & JsonHelper {
-    var code: ?String = None // code
-    var msg: ?String = None // msg
-    var subCode: ?String = None // sub_code
-    var subMsg: ?String = None // sub_msg
-    var outTradeNo: ?String = None // out_trade_no
-    var qrCode: ?String = None // qr_code
+public class PrecreateResponse <: Serializable<PrecreateResponse> & JsonHelper {
+    public var code: ?String = None // code
+    public var msg: ?String = None // msg
+    public var subCode: ?String = None // sub_code
+    public var subMsg: ?String = None // sub_msg
+    public var outTradeNo: ?String = None // out_trade_no
+    public var qrCode: ?String = None // qr_code
 
     public func serialize(): DataModel {
         return DataModelStruct()
