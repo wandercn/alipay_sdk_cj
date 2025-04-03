@@ -15,6 +15,7 @@ import std.time.{TimeZone, DateTime}
 import std.collection.{HashMap, ArrayList}
 import encoding.url.{Form, URL}
 import std.sort.SortExtension
+import std.collection.*
 
 public func getNowBeijingTimeStr(): String {
     let timeFormat = "yyyy-MM-dd HH:mm:ss"
@@ -85,37 +86,70 @@ func queryEscape(input: String) {
  * 返回值 source - 签名字符串 , sign - 签名 , signType - 签名类型
  */
 func getAsyncCallBackMsgSource(rawbody: Array<Byte>): (source: String, sign: String, signType: String) {
-    let query = String.fromUtf8(rawbody)
     var keys = ArrayList<String>()
-    var kvs = HashMap<String, String>()
+    var values = HashMap<String, String>()
+    // 根据URL Query的编码规则，空格表示+号，需要还原+号为空格
+    let queryStr = String.fromUtf8(rawbody).replace("+"," ")
+    parseQuery(values, queryStr)
 
-    for (one in query.split("&", removeEmpty: true)) {
-        let splits = one.split("=", removeEmpty: true)
-        let k = splits[0]
-        let v = splits[1]
-        kvs.put(k, v)
+    for ((k, _) in values) {
         keys.append(k)
     }
+
     // 按字典排序
     keys.sort(stable: true)
-    var form = Form()
-    for ((k, v) in kvs) {
-        form.set(k, v)
-    }
 
-    let signType = match (form.get("sign_type")) {
+    let signType = match (values.get("sign_type")) {
         case Some(v) => v
         case None => throw Exception("callback msg 's sign_type is None ")
     }
-    let sign = match (form.get("sign")) {
-        case Some(v) => v
+    let sign = match (values.get("sign")) {
+        //签名是base64有可能包含+但是不可能有空格，所以把空格还原回 +
+        case Some(v) => v.replace(" ", "+")
         case None => throw Exception("callback msg 's sign is None ")
     }
     // 待签名字符串不包括sign和sign_type,需要删除
-    form.remove("sign")
-    form.remove("sign_type")
-    // 拼接成待签名字符串
-    let source = form.toEncodeString()
+    values.remove("sign")
+    values.remove("sign_type")
 
-    return (source, sign, signType)
+    let oldMap = values.clone()
+    // 拼接成待签名字符串
+    func getValue(key: String): String {
+        if (let Some(value) <- oldMap.get(key)) {
+            return "${key}=${value}"
+        }
+        return ""
+    }
+    var source: String = keys |> map(getValue) |> filter {x => x != ""} |> collectString<String>(delimiter: "&")
+
+    return (source.trimEnd("&"), sign, signType)
+}
+
+public func parseQuery(values: HashMap<String, String>, query: String) {
+    var str = query
+    println("query: ${str}")
+    while (!str.isEmpty()) {
+        var key: String
+        (key, str, _) = String.cut(str, "&")
+        if (key.isEmpty()) {
+            continue
+        }
+        var value: String
+        (key, value, _) = String.cut(key, "=")
+        if (value.isEmpty()) {
+            continue
+        }
+        values.put(key, value)
+        println("key: ${key} value: ${value}")
+    }
+    return
+}
+
+extend String {
+    public static func cut(s: String, sep: String): (before: String, after: String, found: Bool) {
+        if (let Some(i) <- s.indexOf(sep)) {
+            return (s[..i], s[(i + sep.size)..], true)
+        }
+        (s, "", false)
+    }
 }
