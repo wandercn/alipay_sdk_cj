@@ -163,6 +163,56 @@ func newPayClient(): Payer {
 
 ```
 
+## 异步签名回调接口的参考实现
+
+```cangjie
+import std.time.DateTime
+import alipay_sdk.{PayClientBuilder, Payer}
+import alipay_sdk.biz
+import encoding.json.{JsonString, JsonInt, ToJson}
+import net.http.ServerBuilder
+import net.http.{HttpRequestHandler, HttpContext}
+
+public class alipayCallBack <: HttpRequestHandler {
+    public func handle(ctx: HttpContext): Unit {
+        let req = ctx.request
+        var isPass = false
+        // 支付宝回调接口是以POST方式发送的
+        if (req.method == "POST") {
+            if (let Some(length) <- req.bodySize) {
+                var body = Array<Byte>(length, item: 0)
+                req.body.read(body)
+
+                isPass = newPayClient().asyncVerifySign(body) // 这里 newPayClient()函数是上一个例子程序实现的我就不重复代码了
+                // 根据是否验证通过，给支付宝返回信息
+                if (isPass) {
+
+                    // ... 省略解析返回信息解析处理代码，比如根据返回信息修改支付订单的状态
+
+                    // 签证成功必须返回字符串 success，不然支付宝会重试多次发送重复的信息 
+                    ctx.responseBuilder.status(200).body("success")
+                    return
+                }
+            }
+        }
+        // 签证签名失败都统一返回 fail
+        ctx.responseBuilder.status(200).body("fail")
+        return
+    }
+}
+
+main() {
+    // 1. 构建 Server 实例
+    let server = ServerBuilder().addr("127.0.0.1").port(8080).build()
+    // 2. 注册 HttpRequestHandler
+    let callback = alipayCallBack()
+    server.distributor.register("/callback",callback)
+
+    // 3. 启动服务
+    server.serve()
+}
+```
+
 ## 参考项目
 
 https://github.com/wandercn/alipay_sdk_rust

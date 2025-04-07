@@ -123,6 +123,7 @@ func getAsyncCallBackMsgSource(rawbody: Array<Byte>): (source: String, sign: Str
     var source: String = keys |> map(getValue) |> filter {x => x != ""} |> collectString<String>(delimiter: "&")
 
     return (source.trimLeft("&"), sign, signType)
+
 }
 
 public func parseQuery(values: HashMap<String, String>, query: String) {

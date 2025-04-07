@@ -5,6 +5,7 @@ import std.time.DateTime
 import alipay_sdk.{PayClientBuilder, Payer}
 import alipay_sdk.biz
 import encoding.json.{JsonString, JsonInt, ToJson}
+import serialization.serialization.DataModel
 
 main() {
     let outTradeNo = DateTime.now().toUnixTimeStamp().toNanoseconds().toString()
