@@ -11,7 +11,7 @@
  */
 package alipay_sdk.jsonhelper
 
-import serialization.serialization.{Serializable, DataModel, DataModelStruct, field}
+import stdx.serialization.serialization.{Serializable, DataModel, DataModelStruct, field}
 
 public interface GetDms {
     static func getDms(dm: DataModel) {

@@ -18,11 +18,11 @@
  */
 package alipay_sdk
 
-import net.http.{HttpResponse, ClientBuilder, Client, HttpRequestBuilder}
-import net.tls.{TlsClientConfig, CertificateVerifyMode}
-import encoding.json.{JsonValue, ToJson}
+import stdx.net.http.{HttpResponse, ClientBuilder, Client, HttpRequestBuilder}
+import stdx.net.tls.{TlsClientConfig, CertificateVerifyMode}
+import stdx.encoding.json.{JsonValue, ToJson}
 import std.collection.HashMap
-import serialization.serialization.{DataModel, Serializable, DataModelStruct}
+import stdx.serialization.serialization.{DataModel, Serializable, DataModelStruct}
 import alipay_sdk.biz.{BizContenter, TradeCreateBiz, getResponseKey, TradePayBiz, TradeCloseBiz, TradeQueryBiz, 
     TradeRefundBiz, TradeAppPayBiz, TradeCancelBiz, TradeWapPayBiz, TradePagePayBiz, TradePrecreateBiz, 
     TradePageRefundBiz, TradeFastpayRefundQueryBiz}

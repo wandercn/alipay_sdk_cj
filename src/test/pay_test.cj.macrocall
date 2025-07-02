@@ -32,21 +32,65 @@ func newPayClient(): Payer {
     return client
 }
 
-@Test
-public class PayTest{
-    @TestCase
-    public func testTradeCreate(){
-    let outTradeNo = DateTime.now().toUnixTimeStamp().toNanoseconds().toString()
-    var bizContent = biz.TradeCreateBiz()
-    bizContent.setSubject(JsonString("华为Mate70"))
-    bizContent.setOutTradeNo(JsonString(outTradeNo))
-    bizContent.setTotalAmount(JsonInt(5))
-    bizContent.set("seller_id", JsonString("2088721038897364"))
-    bizContent.setBuyerId(JsonString("2088722038897372"))
-    bizContent.set("timestamp", JsonString("2024-10-28 17:47:04"))
-    let client = newPayClient()
-    let result = client.tradeCreate(bizContent)
-    @Expect(result.response.code,"10000")
-    @Expect(result.response.msg,"Success")
-    }
-}
+/* ===== Emitted by MacroCall @Test in pay_test.cj:35:1 ===== */
+/* 35.1 */@Attribute[TEST_GENERATED] class PayTest <: TestClass {
+/* 35.2 */    @Attribute[TestCase_2]
+/* 35.3 */    public func testTradeCreate() {
+/* 35.4 */        let outTradeNo = DateTime.now().toUnixTimeStamp().toNanoseconds().toString()
+/* 35.5 */        var bizContent = biz.TradeCreateBiz()
+/* 35.6 */        bizContent.setSubject(JsonString("华为Mate70"))
+/* 35.7 */        bizContent.setOutTradeNo(JsonString(outTradeNo))
+/* 35.8 */        bizContent.setTotalAmount(JsonInt(5))
+/* 35.9 */        bizContent.set("seller_id", JsonString("2088721038897364"))
+/* 35.10 */        bizContent.setBuyerId(JsonString("2088722038897372"))
+/* 35.11 */        bizContent.set("timestamp", JsonString("2024-10-28 17:47:04"))
+/* 35.12 */        let client = newPayClient()
+/* 35.13 */        let result = client.tradeCreate(bizContent)
+/* 35.14 */        expectEqual("result.response.code", "\"10000\"", result.response.code, "10000")
+/* 35.15 */        expectEqual("result.response.msg", "\"Success\"", result.response.msg, "Success")
+/* 35.16 */    }
+/* 35.17 */    
+/* 35.18 */    init() {
+/* 35.19 */    }
+/* 35.20 */    private func classConfiguration(): Configuration {
+/* 35.21 */        let configuration = Configuration()
+/* 35.22 */        
+/* 35.23 */        return configuration
+/* 35.24 */    }
+/* 35.25 */    public override func asTestSuite(): TestSuite {
+/* 35.26 */        
+/* 35.27 */        let suiteConfiguration = classConfiguration()
+/* 35.28 */        let suiteBuilder = TestSuite.builder("PayTest").configure(suiteConfiguration)
+/* 35.29 */        
+/* 35.30 */        { => let caseConfig = Configuration()
+/* 35.31 */            
+/* 35.32 */            let testTradeCreateTestFunc = { => testTradeCreate();() }
+/* 35.33 */            suiteBuilder.add(
+/* 35.34 */            UnitTestCase.create(
+/* 35.35 */            "testTradeCreate",
+/* 35.36 */            configuration: caseConfig,
+/* 35.37 */            body: testTradeCreateTestFunc
+/* 35.38 */            )
+/* 35.39 */            )
+/* 35.40 */            
+/* 35.41 */        }()
+/* 35.42 */        
+/* 35.43 */        return suiteBuilder.build()
+/* 35.44 */    }
+/* 35.45 */    private func inheritedFromClassAnnotatedByTestTemplate < T >(): TestSuite where T <: TestClass {
+/* 35.46 */        throw Exception("Unreachable code")
+/* 35.47 */    }
+/* 35.48 */}
+/* 35.49 */
+/* 35.50 */
+/* 35.51 */interface TestPackageExtension_PayTest {
+/* 35.52 */    func registerPayTest(): Unit
+/* 35.53 */}
+/* 35.54 */extend TestPackage <: TestPackageExtension_PayTest {
+/* 35.55 */    @Attribute[TEST_REGISTER]
+/* 35.56 */    public func registerPayTest() {
+/* 35.57 */        registerSuite({ => PayTest().asTestSuite() })
+/* 35.58 */    }
+/* 35.59 */}
+/* 35.60 */
+/* ===== End of the Emit ===== */

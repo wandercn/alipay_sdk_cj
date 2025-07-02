@@ -11,7 +11,7 @@
  */
 package alipay_sdk.response
 
-import serialization.serialization.{Serializable, DataModel, DataModelStruct, field}
+import stdx.serialization.serialization.{Serializable, DataModel, DataModelStruct, field}
 import std.collection.ArrayList
 import alipay_sdk.jsonhelper.JsonHelper
 

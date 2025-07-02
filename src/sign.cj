@@ -11,11 +11,11 @@
  */
 package alipay_sdk
 
-import crypto.keys.{RSAPrivateKey, RSAPublicKey, PadOption}
+import stdx.crypto.keys.{RSAPrivateKey, RSAPublicKey, PadOption}
 import std.io.{ByteBuffer, StringWriter, readString}
-import crypto.digest.SHA256
+import stdx.crypto.digest.SHA256
 import std.crypto.digest.digest
-import encoding.base64
+import stdx.encoding.base64
 
 public interface Signer {
     mut func setPrivateKey(s: String): Unit
@@ -51,7 +51,8 @@ public struct SignSHA256WithRSA <: Signer {
     public func sign(source: String): String {
         if (let Some(priv) <- this.privateKey) {
             var h = SHA256()
-            var md = digest(h, source)
+            h.write(source.toArray())
+            var md = h.finish()
             let signatureByte = priv.sign(h, md, padType: PKCS1)
             return base64.toBase64String(signatureByte)
         } else {
@@ -62,7 +63,8 @@ public struct SignSHA256WithRSA <: Signer {
     public func verify(source: String, signature: String): Bool {
         if (let Some(pubKey) <- this.publicKey) {
             var h = SHA256()
-            var md = digest(h, source)
+            h.write(source.toArray())
+            var md = h.finish()
             var decodeSign = base64.fromBase64String(signature)
             match (decodeSign) {
                 case Some(signArr) => return pubKey.verify(h, md, signArr, padType: PKCS1)

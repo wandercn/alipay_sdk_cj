@@ -13,10 +13,10 @@ package alipay_sdk
 
 import alipay_sdk.biz
 import alipay_sdk.jsonhelper.JsonHelper
-import serialization.serialization.{Serializable, DataModelStruct, DataModel, field, Field}
+import stdx.serialization.serialization.{Serializable, DataModelStruct, DataModel, field, Field}
 import std.collection.{ArrayList, HashMap}
-import std.sort.stableSort
-import encoding.url.Form
+import std.sort.sort
+import stdx.encoding.url.Form
 
 public interface Requester {
     func setMethod(s: String): Requester
@@ -147,12 +147,12 @@ public class Request <: Serializable<Request> & Requester & JsonHelper {
             if (let Some(v2) <- v) {
                 if (!v2.isEmpty() && k != "sign") {
                     let query = k + "=" + v2.trimStart(" ").trimEnd(" ")
-                    queryList.append(query)
+                    queryList.add(query)
                 }
             }
         }
         var kvs = queryList.toArray()
-        stableSort(kvs)
+        sort(kvs,stable: true)
 
         return String.join(kvs, delimiter: "&")
     }

@@ -12,8 +12,8 @@
 package alipay_sdk.biz
 
 import std.collection.HashMap
-import encoding.json.{JsonObject, JsonValue}
-import serialization.serialization.DataModel
+import stdx.encoding.json.{JsonObject, JsonValue}
+import stdx.serialization.serialization.DataModel
 
 public type V = JsonValue
 

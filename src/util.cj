@@ -11,17 +11,17 @@
  */
 package alipay_sdk
 
-import std.time.{TimeZone, DateTime}
+import std.time.{TimeZone, DateTime,DateTimeFormat}
 import std.collection.{HashMap, ArrayList}
-import encoding.url.{Form, URL}
-import std.sort.SortExtension
+import stdx.encoding.url.{Form, URL}
+import std.sort.sort
 import std.collection.*
 
 public func getNowBeijingTimeStr(): String {
     let timeFormat = "yyyy-MM-dd HH:mm:ss"
     let loc = TimeZone("CST", Duration.hour * 8)
     let nowTime = DateTime.now().inTimeZone(loc)
-    return nowTime.toString(timeFormat)
+    return nowTime.format(timeFormat)
 }
 
 func buildFrom(baseUrl: String, parameters: HashMap<String, String>): String {
@@ -93,11 +93,11 @@ func getAsyncCallBackMsgSource(rawbody: Array<Byte>): (source: String, sign: Str
     parseQuery(values, queryStr)
 
     for ((k, _) in values) {
-        keys.append(k)
+        keys.add(k)
     }
 
     // 按字典排序
-    keys.sort(stable: true)
+    sort(keys,stable: true)
 
     let signType = match (values.get("sign_type")) {
         case Some(v) => v
@@ -139,7 +139,7 @@ public func parseQuery(values: HashMap<String, String>, query: String) {
         if (value.isEmpty()) {
             continue
         }
-        values.put(key, value)
+        values.add(key, value)
         println("key: ${key} value: ${value}")
     }
     return
