@@ -97,7 +97,7 @@ Beta Channel 0.53.13
 alipay_sdk  = {git = "https://gitcode.com/Cangjie-SIG/alipay_sdk_cj.git", branch = "beta_0.53.13"}
 ```
 
-Dev Channel 0.56.4
+LTS Channel 1.0.0
 
 ```
 [dependencies]
