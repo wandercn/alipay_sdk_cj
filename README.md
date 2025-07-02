@@ -52,9 +52,20 @@ AliPay Sdk for 仓颉
 
 ### 注意事项说明：
 
-main分支： 目前适配 Dev Channel 0.56.4
+2025.7.1 已经发布cangjie 1.0.0版本，所以main改成适配 LTS 1.0.0版本，原来标准库中的很多包拆分到stdx中了，请自行下载stdx包 https://gitcode.com/Cangjie/cangjie-stdx/releases/v1.0.0.1 
 
-beta_0.53.13分支：目前适配 Beta Channel 0.53.13
+`
+ 并在系统中配置环境变量CANGJIE_STDX_HOME
+ 例如linux 和macosx中
+ ~/.bash_profile 或 ~/.zshrc
+
+ export CANGJIE_STDX_HOME= /Users/lsmiao/cangjie_stdx #你的stdx的实际存放路径
+
+`
+
+main分支： 目前适配 Dev Channel 0.56.4(2025.7.1后不对dev分支适配)
+
+beta_0.53.13分支：目前适配 Beta Channel 0.53.13(20250.7.1后不对Beta分支适配)
 
 ### 源码目录
 
