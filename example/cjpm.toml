@@ -2,7 +2,7 @@
  alipay_sdk  = {git = "https://gitcode.com/Cangjie-SIG/alipay_sdk_cj.git" ,branch = "main"}
 #  alipay_sdk = {path = "../../alipay_sdk_cj",output-type = "static"}
 [package]
-  cjc-version = "0.56.4"
+  cjc-version = "1.0.0"
   compile-option = ""
   description = "nothing here"
   link-option = ""
@@ -13,3 +13,31 @@
   target-dir = ""
   version = "1.0.0"
   package-configuration = {}
+
+[target.aarch64-apple-darwin]
+  [target.aarch64-apple-darwin.bin-dependencies]
+    path-option = ["${CANGJIE_STDX_HOME}/static/stdx"]
+
+[target.x86_64-apple-darwin]
+  [target.x86_64-apple-darwin.bin-dependencies]
+    path-option = ["${CANGJIE_STDX_HOME}/static/stdx"]
+
+[target.x86_64-unknown-linux-gnu]
+  [target.x86_64-unknown-linux-gnu.bin-dependencies]
+    path-option = ["${CANGJIE_STDX_HOME}/static/stdx"]
+
+[target.aarch64-unknown-linux-gnu]
+  [target.aarch64-unknown-linux-gnu.bin-dependencies]
+    path-option = ["${CANGJIE_STDX_HOME}/static/stdx"]
+
+[target.x86_64-linux-ohos]
+  [target.x86_64-linux-ohos.bin-dependencies]
+    path-option = ["${CANGJIE_STDX_HOME}/static/stdx"]
+
+[target.aarch64-linux-ohos]
+  [target.aarch64-linux-ohos.bin-dependencies]
+    path-option = ["${CANGJIE_STDX_HOME}/static/stdx"]
+
+[target.x86_64-w64-mingw32]
+  [target.x86_64-w64-mingw32.bin-dependencies]
+    path-option = ["${CANGJIE_STDX_HOME}/static/stdx"]
